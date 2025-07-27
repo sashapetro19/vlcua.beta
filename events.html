@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Події — VLC.UA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body {
+      background: #f9f9f9;
+      color: #111827;
+    }
+    .glass {
+      backdrop-filter: blur(24px);
+      background-color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .card {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #fbbf24);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    .neon-button {
+      transition: all 0.3s ease;
+    }
+    .neon-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .category-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-meetup { background: #dbeafe; color: #1e40af; }
+    .badge-culture { background: #fce7f3; color: #be185d; }
+    .badge-education { background: #dcfce7; color: #166534; }
+    .badge-business { background: #fff7ed; color: #c2410c; }
+    .badge-concert { background: #f3e8ff; color: #7c3aed; }
+    .badge-activity { background: #fef3c7; color: #d97706; }
+    
+    .filter-pill {
+      padding: 8px 16px;
+      border-radius: 25px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    .filter-pill:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .filter-pill.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+    
+    .event-image {
+      height: 200px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .event-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .floating-action {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 40;
+    }
+    
+    @media (max-width: 768px) {
+      .floating-action {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
+          VLC
+        </div>
+        <span class="font-extrabold text-xl">VLC.UA</span>
+      </div>
+      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <a href="/events.html" class="text-blue-600 font-bold">Події</a>
+        <a href="business.html">Бізнес</a>
+        <a href="#ads">Оголошення</a>
+        <a href="#news">Новини</a>
+      </nav>
+      <button class="hidden md:inline-block bg-black text-white font-bold px-5 py-2 rounded-xl neon-button">Вхід</button>
+      <button class="md:hidden text-gray-800 text-xl" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero section -->
+  <section class="pt-32 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100 text-center px-4">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Події</h1>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-6">Відкривай нові горизонти разом з українською спільнотою Валенсії — від бізнес-зустрічей до концертів</p>
+    <div class="flex flex-wrap justify-center gap-2 text-sm text-gray-500">
+      <span><i class="fas fa-calendar mr-1"></i> 25+ подій щомісяця</span>
+      <span><i class="fas fa-users mr-1"></i> 500+ учасників</span>
+      <span><i class="fas fa-star mr-1"></i> 4.8/5 рейтинг</span>
+    </div>
+  </section>
+
+  <!-- Розширені фільтри -->
+  <section class="bg-white py-8 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <!-- Пошук -->
+      <div class="mb-6">
+        <div class="relative max-w-2xl mx-auto">
+          <input 
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Пошук за назвою, описом або локацією..."
+            class="w-full px-6 py-4 rounded-2xl border border-gray-200 bg-gray-50 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:bg-white text-lg"
+            oninput="filterEvents()"
+          />
+          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500">
+            <i class="fas fa-search text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Категорії -->
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-800">Категорії</h3>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+          <button class="filter-pill active" data-category="all" onclick="setActiveFilter(this, 'all')">
+            <i class="fas fa-list mr-2"></i>Усі події
+          </button>
+          <button class="filter-pill" data-category="meetup" onclick="setActiveFilter(this, 'meetup')">
+            <i class="fas fa-handshake mr-2"></i>Мітапи
+          </button>
+          <button class="filter-pill" data-category="culture" onclick="setActiveFilter(this, 'culture')">
+            <i class="fas fa-palette mr-2"></i>Культура
+          </button>
+          <button class="filter-pill" data-category="education" onclick="setActiveFilter(this, 'education')">
+            <i class="fas fa-graduation-cap mr-2"></i>Освіта
+          </button>
+          <button class="filter-pill" data-category="business" onclick="setActiveFilter(this, 'business')">
+            <i class="fas fa-briefcase mr-2"></i>Бізнес
+          </button>
+          <button class="filter-pill" data-category="concert" onclick="setActiveFilter(this, 'concert')">
+            <i class="fas fa-music mr-2"></i>Концерти
+          </button>
+          <button class="filter-pill" data-category="activity" onclick="setActiveFilter(this, 'activity')">
+            <i class="fas fa-running mr-2"></i>Активності
+          </button>
+        </div>
+      </div>
+
+      <!-- Додаткові фільтри -->
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <div class="flex gap-3">
+          <select id="dateFilter" class="px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-blue-500" onchange="filterEvents()">
+            <option value="all">Усі дати</option>
+            <option value="today">Сьогодні</option>
+            <option value="tomorrow">Завтра</option>
+            <option value="week">Цей тиждень</option>
+            <option value="month">Цей місяць</option>
+          </select>
+          
+          <select id="priceFilter" class="px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-blue-500" onchange="filterEvents()">
+            <option value="all">Усі ціни</option>
+            <option value="free">Безкоштовно</option>
+            <option value="paid">Платні</option>
+          </select>
+        </div>
+        
+        <div class="flex items-center gap-2 text-sm text-gray-500">
+          <span>Сортування:</span>
+          <select id="sortFilter" class="px-3 py-1 rounded-lg border border-gray-200 text-gray-600" onchange="sortEvents()">
+            <option value="date">За датою</option>
+            <option value="popular">За популярністю</option>
+            <option value="alphabetical">За алфавітом</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Статистика -->
+  <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-8 text-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl font-bold">15</div>
+          <div class="text-blue-200">Подій цього тижня</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold">3</div>
+          <div class="text-blue-200">Концерти</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold">8</div>
+          <div class="text-blue-200">Безкоштовні</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold">250+</div>
+          <div class="text-blue-200">Учасників</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Карти подій -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div id="eventsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Подія 1 - Мітап -->
+        <div class="card rounded-2xl overflow-hidden" data-category="meetup" data-date="2025-07-28" data-price="free">
+          <div class="event-image bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+            <i class="fas fa-handshake text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">28 липня • 19:00</div>
+              <span class="category-badge badge-meetup">Мітап</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Зустріч українських підприємців</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Networking-подія у самому серці Валенсії для власників бізнесу та стартаперів. Діляємося досвідом і будуємо зв'язки.</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Centro Valencia</span>
+              </div>
+              <div class="flex items-center text-sm text-green-600 font-semibold">
+                <i class="fas fa-gift mr-1"></i>
+                <span>Безкоштовно</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подія 2 - Культура -->
+        <div class="card rounded-2xl overflow-hidden" data-category="culture" data-date="2025-07-30" data-price="free">
+          <div class="event-image bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
+            <i class="fas fa-film text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">30 липня • 18:00</div>
+              <span class="category-badge badge-culture">Культура</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Кіновечір: Українське кіно</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Спільний перегляд стрічки «Мої думки тихі» з обговоренням та смачним чаєм з українськими солодощами.</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Sala Cultural</span>
+              </div>
+              <div class="flex items-center text-sm text-green-600 font-semibold">
+                <i class="fas fa-gift mr-1"></i>
+                <span>Безкоштовно</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подія 3 - Освіта -->
+        <div class="card rounded-2xl overflow-hidden" data-category="education" data-date="2025-08-05" data-price="free">
+          <div class="event-image bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+            <i class="fas fa-paint-brush text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">5 серпня • 10:00</div>
+              <span class="category-badge badge-education">Освіта</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Воркшоп з петриківки для дітей</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Майстер-клас із малювання петриківського розпису для дітей 6–12 років. Усі матеріали надаються.</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Centro Cívico</span>
+              </div>
+              <div class="flex items-center text-sm text-green-600 font-semibold">
+                <i class="fas fa-gift mr-1"></i>
+                <span>Безкоштовно</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подія 4 - Концерт -->
+        <div class="card rounded-2xl overflow-hidden" data-category="concert" data-date="2025-08-10" data-price="paid">
+          <div class="event-image bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+            <i class="fas fa-music text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">10 серпня • 21:00</div>
+              <span class="category-badge badge-concert">Концерт</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Вечір української музики</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Концерт українських виконавців з Валенсії. Від фолку до сучасної поп-музики. Запрошені зірки з України!</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Sala Mozart</span>
+              </div>
+              <div class="flex items-center text-sm text-blue-600 font-semibold">
+                <i class="fas fa-ticket-alt mr-1"></i>
+                <span>15€</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подія 5 - Активність -->
+        <div class="card rounded-2xl overflow-hidden" data-category="activity" data-date="2025-08-12" data-price="free">
+          <div class="event-image bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+            <i class="fas fa-running text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">12 серпня • 08:00</div>
+              <span class="category-badge badge-activity">Активність</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Ранкова пробіжка в парку</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Спільна пробіжка українською компанією. Підходить для всіх рівнів підготовки. Після — каву разом!</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Jardín del Turia</span>
+              </div>
+              <div class="flex items-center text-sm text-green-600 font-semibold">
+                <i class="fas fa-gift mr-1"></i>
+                <span>Безкоштовно</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Подія 6 - Бізнес -->
+        <div class="card rounded-2xl overflow-hidden" data-category="business" data-date="2025-08-15" data-price="paid">
+          <div class="event-image bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+            <i class="fas fa-briefcase text-white text-6xl opacity-80"></i>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div class="text-sm text-gray-500">15 серпня • 17:00</div>
+              <span class="category-badge badge-business">Бізнес</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Семінар: Відкриття бізнесу в Іспанії</h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Практичний семінар від експертів про юридичні аспекти, податки та можливості для українських підприємців.</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>Hotel Valencia</span>
+              </div>
+              <div class="flex items-center text-sm text-blue-600 font-semibold">
+                <i class="fas fa-ticket-alt mr-1"></i>
+                <span>25€</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+                Детальніше <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Повідомлення про відсутність результатів -->
+      <div id="noResults" class="hidden text-center py-16">
+        <i class="fas fa-search text-gray-400 text-6xl mb-4"></i>
+        <h3 class="text-2xl font-bold text-gray-600 mb-2">Нічого не знайдено</h3>
+        <p class="text-gray-500">Спробуйте змінити фільтри або пошуковий запит</p>
+      </div>
+
+      <!-- Кнопка завантажити більше -->
+      <div class="text-center mt-12">
+        <button class="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
+          <i class="fas fa-plus mr-2"></i>Завантажити більше подій
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-center text-white">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Організовуєш подію?</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">Розкажи про неї українській спільноті Валенсії та залучи більше учасників!</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold neon-button hover:shadow-2xl">
+        <i class="fas fa-plus mr-2"></i> Додати подію
+      </a>
+      <a href="#" class="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300">
+        <i class="fas fa-calendar-alt mr-2"></i> Календар подій
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-12">
+    <div class="max-w-6xl mx-auto px-4 text-gray-400 text-center">
+      <p class="mb-4">© 2025 VLC.UA — Платформа українців у Валенсії</p>
+      <div class="flex justify-center space-x-4 mb-4">
+        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-telegram-plane"></i></a>
+        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p class="text-sm text-gray-500">Розроблено з ❤️ для української спільноти</p>
+    </div>
+  </footer>
+
+  <!-- Плаваюча кнопка -->
+  <div class="floating-action">
+    <a href="#" class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110">
+      <i class="fas fa-plus text-xl"></i>
+    </a>
+  </div>
+
+  <script>
+    let currentCategory = 'all';
+    
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    }
+
+    function setActiveFilter(button, category) {
+      // Видаляємо активний клас з усіх кнопок
+      document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      
+      // Додаємо активний клас до поточної кнопки
+      button.classList.add('active');
+      currentCategory = category;
+      
+      filterEvents();
+    }
+
+    function filterEvents() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const dateFilter = document.getElementById('dateFilter').value;
+      const priceFilter = document.getElementById('priceFilter').value;
+      const events = document.querySelectorAll('#eventsContainer .card');
+      let visibleCount = 0;
+
+      events.forEach(event => {
+        const category = event.dataset.category;
+        const eventDate = event.dataset.date;
+        const eventPrice = event.dataset.price;
+        const eventText = event.textContent.toLowerCase();
+
+        let showEvent = true;
+
+        // Фільтр категорії
+        if (currentCategory !== 'all' && category !== currentCategory) {
+          showEvent = false;
+        }
+
+        // Фільтр пошуку
+        if (searchTerm && !eventText.includes(searchTerm)) {
+          showEvent = false;
+        }
+
+        // Фільтр ціни
+        if (priceFilter !== 'all' && eventPrice !== priceFilter) {
+          showEvent = false;
+        }
+
+        // Фільтр дати (спрощена версія)
+        if (dateFilter !== 'all') {
+          const today = new Date();
+          const eventDateObj = new Date(eventDate);
+          
+          switch(dateFilter) {
+            case 'today':
+              if (eventDateObj.toDateString() !== today.toDateString()) {
+                showEvent = false;
+              }
+              break;
+            case 'tomorrow':
+              const tomorrow = new Date(today);
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              if (eventDateObj.toDateString() !== tomorrow.toDateString()) {
+                showEvent = false;
+              }
+              break;
+            case 'week':
+              const weekFromNow = new Date(today);
+              weekFromNow.setDate(weekFromNow.getDate() + 7);
+              if (eventDateObj > weekFromNow || eventDateObj < today) {
+                showEvent = false;
+              }
+              break;
+            case 'month':
+              const monthFromNow = new Date(today);
+              monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+              if (eventDateObj > monthFromNow || eventDateObj < today) {
+                showEvent = false;
+              }
+              break;
+          }
+        }
+
+        if (showEvent) {
+          event.style.display = 'block';
+          event.style.animation = 'fadeIn 0.5s ease-in';
+          visibleCount++;
+        } else {
+          event.style.display = 'none';
+        }
+      });
+
+      // Показуємо/ховаємо повідомлення про відсутність результатів
+      const noResults = document.getElementById('noResults');
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    function sortEvents() {
+      const container = document.getElementById('eventsContainer');
+      const events = Array.from(container.children).filter(child => child.classList.contains('card'));
+      const sortBy = document.getElementById('sortFilter').value;
+
+      events.sort((a, b) => {
+        switch(sortBy) {
+          case 'date':
+            return new Date(a.dataset.date) - new Date(b.dataset.date);
+          case 'alphabetical':
+            const titleA = a.querySelector('h3').textContent;
+            const titleB = b.querySelector('h3').textContent;
+            return titleA.localeCompare(titleB, 'uk');
+          case 'popular':
+            // Можна додати логіку сортування за популярністю
+            return Math.random() - 0.5; // Поки що рандомно
+          default:
+            return 0;
+        }
+      });
+
+      // Очищуємо контейнер і додаємо відсортовані елементи
+      container.innerHTML = '';
+      events.forEach(event => container.appendChild(event));
+    }
+
+    // Додаємо CSS анімацію
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .card {
+        animation: fadeIn 0.5s ease-in;
+      }
+      
+      .floating-action a:hover {
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+      }
+      
+      /* Покращена адаптивність */
+      @media (max-width: 768px) {
+        .filter-pill {
+          font-size: 14px;
+          padding: 6px 12px;
+        }
+        
+        .event-image {
+          height: 150px;
+        }
+        
+        .card h3 {
+          font-size: 18px;
+        }
+      }
+      
+      /* Плавні переходи для карток */
+      .card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .card:hover {
+        transform: translateY(-8px) scale(1.02);
+      }
+      
+      /* Ефект завантаження */
+      .loading {
+        position: relative;
+        pointer-events: none;
+      }
+      
+      .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+      }
+      
+      .loading::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid #3b82f6;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 1;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Покращені hover ефекти */
+      .category-badge {
+        transition: all 0.2s ease;
+      }
+      
+      .card:hover .category-badge {
+        transform: scale(1.1);
+      }
+      
+      /* Адаптивна сітка */
+      @media (max-width: 1024px) {
+        #eventsContainer {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+      }
+      
+      @media (max-width: 640px) {
+        #eventsContainer {
+          grid-template-columns: 1fr;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Ініціалізація при завантаженні сторінки
+    document.addEventListener('DOMContentLoaded', function() {
+      // Додаємо обробники подій для клавіатури
+      document.getElementById('searchInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          filterEvents();
+        }
+      });
+
+      // Додаємо ефект плавного з'явлення карток при завантаженні
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+          card.style.transition = 'all 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+
+      // Додаємо обробник для плаваючої кнопки
+      document.querySelector('.floating-action a').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Функція для імітації завантаження нових подій
+    function loadMoreEvents() {
+      const container = document.getElementById('eventsContainer');
+      const loadButton = document.querySelector('button:contains("Завантажити більше")');
+      
+      if (loadButton) {
+        loadButton.classList.add('loading');
+        loadButton.textContent = 'Завантаження...';
+        
+        // Імітація завантаження
+        setTimeout(() => {
+          loadButton.classList.remove('loading');
+          loadButton.innerHTML = '<i class="fas fa-plus mr-2"></i>Завантажити більше подій';
+          
+          // Тут можна додати логіку завантаження нових подій з сервера
+        }, 2000);
+      }
+    }
+
+    // Lazy loading для покращення продуктивності
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              imageObserver.unobserve(img);
+            }
+          }
+        });
+      });
+
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+  </script>
+</body>
+</html>

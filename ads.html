@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Оголошення — VLC.UA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body {
+      background: #f9f9f9;
+      color: #111827;
+    }
+    .glass {
+      backdrop-filter: blur(24px);
+      background-color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .card {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    .neon-button {
+      transition: all 0.2s ease;
+    }
+    .neon-button:hover {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
+          VLC
+        </div>
+        <span class="font-extrabold text-xl">VLC.UA</span>
+      </div>
+      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <a href="events.html">Події</a>
+        <a href="business.html">Бізнес</a>
+        <a href="/ads.html" class="text-blue-600 font-bold">Оголошення</a>
+        <a href="news.html">Новини</a>
+      </nav>
+      <button class="hidden md:inline-block bg-black text-white font-bold px-5 py-2 rounded-xl neon-button">Вхід</button>
+      <button class="md:hidden text-gray-800 text-xl" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-16 bg-white text-center px-4">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-gray-900">Оголошення</h1>
+    <p class="text-xl text-gray-600 max-w-xl mx-auto">Житло, робота, послуги, куплю/продам — усе на одній платформі, без зайвого шуму</p>
+  </section>
+
+  <!-- Пошук і категорії -->
+  <section class="bg-gray-50 py-10">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+        <input 
+          type="text"
+          placeholder="🔍 Пошук оголошення..."
+          class="w-full md:w-2/3 px-5 py-3 rounded-xl border border-gray-200 bg-white shadow-sm focus:ring-blue-500 focus:outline-none text-lg"
+        />
+        <select class="w-full md:w-1/3 px-5 py-3 rounded-xl border border-gray-200 bg-white shadow-sm text-gray-600">
+          <option>Усі категорії</option>
+          <option>Житло</option>
+          <option>Робота</option>
+          <option>Послуги</option>
+          <option>Куплю/Продам</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Оголошення -->
+  <section class="py-14 bg-white">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Оголошення 1 -->
+      <div class="card p-6 rounded-2xl">
+        <div class="text-sm text-gray-500 mb-2">Житло • 2 год тому</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Здається 2-кімнатна квартира</h3>
+        <p class="text-gray-600 mb-4">Центр Валенсії, мебльована, кондиціонер, 800€/міс. Контакт у Telegram: @valencia_housing</p>
+        <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Переглянути →</a>
+      </div>
+
+      <!-- Оголошення 2 -->
+      <div class="card p-6 rounded-2xl">
+        <div class="text-sm text-gray-500 mb-2">Робота • 1 день тому</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Потрібна няня</h3>
+        <p class="text-gray-600 mb-4">Район Рузафа. Діти 2 і 5 років, графік з 9:00 до 14:00. Важливо — досвід і мова.</p>
+        <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Детальніше →</a>
+      </div>
+
+      <!-- Оголошення 3 -->
+      <div class="card p-6 rounded-2xl">
+        <div class="text-sm text-gray-500 mb-2">Послуги • 3 дні тому</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Переклади документів</h3>
+        <p class="text-gray-600 mb-4">Швидко й офіційно. Українська, іспанська, англійська. Сертифікований перекладач.</p>
+        <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Зв’язатись →</a>
+      </div>
+
+      <!-- Додаткові оголошення тут -->
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-gray-50 text-center">
+    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">Маєш що запропонувати?</h2>
+    <p class="text-lg text-gray-600 mb-8">Створи своє оголошення — допоможи, продай, знайди людей</p>
+    <a href="#" class="bg-black text-white px-8 py-4 rounded-2xl font-bold neon-button">
+      <i class="fas fa-plus mr-2"></i> Додати оголошення
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-12">
+    <div class="max-w-6xl mx-auto px-4 text-gray-400 text-center">
+      <p class="mb-4">© 2025 VLC.UA — Платформа українців у Валенсії</p>
+      <div class="flex justify-center space-x-4">
+        <a href="#" class="hover:text-white"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-white"><i class="fab fa-telegram-plane"></i></a>
+        <a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

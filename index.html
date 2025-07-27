@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VLC.UA - Українська спільнота у Валенсії</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9f9f9;
+      overflow-x: hidden;
+      color: #111827;
+    }
+    .glass {
+      backdrop-filter: blur(24px);
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .neon-button {
+      transition: all 0.2s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    .neon-button:hover {
+      transform: scale(1.02);
+    }
+    .glow-text {
+      text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    }
+    input::placeholder {
+      color: #9ca3af;
+    }
+    .card {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .icon-gradient {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+    .stats-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+    }
+    .stats-card:hover {
+      border-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Modern white-glass navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
+          VLC
+        </div>
+        <span class="font-extrabold text-xl glow-text">VLC.UA</span>
+      </div>
+      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <a href="events.html" class="hover:text-blue-600 transition-colors">Події</a>
+        <a href="business.html" class="hover:text-blue-600 transition-colors">Бізнес</a>
+        <a href="#ads" class="hover:text-blue-600 transition-colors">Оголошення</a>
+        <a href="#news" class="hover:text-blue-600 transition-colors">Новини</a>
+      </nav>
+      <button class="hidden md:inline-block bg-black text-white font-bold px-5 py-2 rounded-xl neon-button">Вхід</button>
+      <button class="md:hidden text-gray-800 text-xl" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden mt-4 glass rounded-xl p-4 md:hidden">
+      <a href="events.html" class="block py-2 text-gray-800 font-medium">Події</a>
+      <a href="business.html" class="block py-2 text-gray-800 font-medium">Бізнес</a>
+      <a href="#ads" class="block py-2 text-gray-800 font-medium">Оголошення</a>
+      <a href="#news" class="block py-2 text-gray-800 font-medium">Новини</a>
+      <button class="mt-4 w-full bg-black text-white font-bold py-2 rounded-xl neon-button">Вхід</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center text-center px-4 bg-white pt-24">
+    <div class="max-w-5xl">
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-gray-900 mb-6">
+        Українці <span class="text-blue-600">у Валенсії</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-10">
+        VLC.UA — сучасна платформа для єднання, розвитку та взаємодопомоги української спільноти
+      </p>
+      
+      <!-- Search Bar -->
+      <div class="mb-8">
+        <div class="max-w-2xl mx-auto relative">
+          <input 
+            type="text" 
+            placeholder="🔍 Знайти події, бізнес, оголошення..." 
+            class="w-full px-6 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+          >
+          <button class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-blue-700 transition-colors">
+            Пошук
+          </button>
+        </div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button class="bg-black text-white font-bold px-8 py-3 rounded-2xl neon-button">
+          <i class="fas fa-rocket mr-2"></i>
+          Почати зараз
+        </button>
+        <button class="border border-gray-300 px-8 py-3 rounded-2xl hover:bg-gray-50 transition-colors font-medium">
+          <i class="fas fa-info-circle mr-2"></i>
+          Дізнатись більше
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="stats-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-blue-600 mb-2">150+</div>
+          <div class="text-gray-600 font-medium">Користувачів</div>
+        </div>
+        <div class="stats-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-blue-600 mb-2">25</div>
+          <div class="text-gray-600 font-medium">Подій/місяць</div>
+        </div>
+        <div class="stats-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-blue-600 mb-2">58</div>
+          <div class="text-gray-600 font-medium">Бізнесів</div>
+        </div>
+        <div class="stats-card p-6 rounded-2xl text-center">
+          <div class="text-3xl font-extrabold text-blue-600 mb-2">120</div>
+          <div class="text-gray-600 font-medium">Оголошень</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+          Все в одному місці
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Повна екосистема для української спільноти у Валенсії
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Події -->
+        <div id="events" class="card p-6 rounded-2xl">
+          <div class="w-12 h-12 icon-gradient rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-calendar-alt text-white text-lg"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Події</h3>
+          <p class="text-gray-600 mb-4 leading-relaxed">Зустрічі, мітапи та заходи української спільноти</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <span class="font-medium">Найближча:</span> 28 липня
+          </div>
+          <a href="events.html" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+            Переглянути події →
+          </a>
+        </div>
+        
+        <!-- Бізнес -->
+        <div id="business" class="card p-6 rounded-2xl">
+          <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-store text-white text-lg"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Бізнес</h3>
+          <p class="text-gray-600 mb-4 leading-relaxed">Каталог українських підприємців з рейтингами</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <span class="font-medium">Всього:</span> 58 бізнесів
+          </div>
+          <a href="business.html" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+            Переглянути каталог →
+          </a>
+        </div>
+        
+        <!-- Оголошення -->
+        <div id="ads" class="card p-6 rounded-2xl">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-bullhorn text-white text-lg"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Оголошення</h3>
+          <p class="text-gray-600 mb-4 leading-relaxed">Житло, робота, послуги від спільноти</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <span class="font-medium">Активних:</span> 120 оголошень
+          </div>
+          <a href="#" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+            Дошка оголошень →
+          </a>
+        </div>
+        
+        <!-- Новини -->
+        <div id="news" class="card p-6 rounded-2xl">
+          <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-newspaper text-white text-lg"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Новини</h3>
+          <p class="text-gray-600 mb-4 leading-relaxed">Актуальні новини та важливі оновлення</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <span class="font-medium">Останнє:</span> 2 години тому
+          </div>
+          <a href="#" class="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+            Читати новини →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activity Feed -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">Останні оновлення</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-6 rounded-2xl">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-calendar text-blue-600"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900">Нова подія</div>
+              <div class="text-gray-500 text-sm">2 години тому</div>
+            </div>
+          </div>
+          <p class="text-gray-700">Зустріч українських підприємців - 28 липня о 19:00 у центрі Валенсії</p>
+        </div>
+        
+        <div class="card p-6 rounded-2xl">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-store text-emerald-600"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900">Новий бізнес</div>
+              <div class="text-gray-500 text-sm">1 день тому</div>
+            </div>
+          </div>
+          <p class="text-gray-700">Українська пекарня "Хліб і Воля" долучилась до нашого каталогу</p>
+        </div>
+        
+        <div class="card p-6 rounded-2xl">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+              <i class="fas fa-home text-purple-600"></i>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900">Нове оголошення</div>
+              <div class="text-gray-500 text-sm">3 години тому</div>
+            </div>
+          </div>
+          <p class="text-gray-700">Здаю 2-кімнатну квартиру в центрі Валенсії, всі зручності</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+        Приєднуйтесь до спільноти
+      </h2>
+      <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+        Станьте частиною найактивнішої української спільноти у Валенсії
+      </p>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+        <button class="bg-black text-white font-bold px-8 py-4 rounded-2xl neon-button">
+          <i class="fas fa-user-plus mr-2"></i>
+          Зареєструватися безкоштовно
+        </button>
+        <button class="border border-gray-300 px-8 py-4 rounded-2xl hover:bg-gray-50 transition-colors font-medium">
+          <i class="fas fa-phone mr-2"></i>
+          Зв'язатися з нами
+        </button>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-8 text-gray-600">
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-check-circle text-green-500"></i>
+          <span>Безкоштовна реєстрація</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-shield-alt text-blue-500"></i>
+          <span>Захист даних</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-users text-purple-500"></i>
+          <span>Активна спільнота</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <!-- Logo -->
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
+              VLC
+            </div>
+            <span class="text-white font-extrabold text-xl">VLC.UA</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed">
+            Платформа для об'єднання українців у Валенсії
+          </p>
+        </div>
+        
+        <!-- Платформа -->
+        <div>
+          <h4 class="font-semibold text-white mb-4">Платформа</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="events.html" class="hover:text-white transition-colors">Події</a></li>
+            <li><a href="business.html" class="hover:text-white transition-colors">Бізнес каталог</a></li>
+            <li><a href="#ads" class="hover:text-white transition-colors">Оголошення</a></li>
+            <li><a href="#news" class="hover:text-white transition-colors">Новини</a></li>
+          </ul>
+        </div>
+        
+        <!-- Контакти -->
+        <div>
+          <h4 class="font-semibold text-white mb-4">Контакти</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="mailto:info@vlc.ua" class="hover:text-white transition-colors">info@vlc.ua</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">@vlc_valencia</a></li>
+            <li>Valencia, España</li>
+          </ul>
+        </div>
+        
+        <!-- Соцмережі -->
+        <div>
+          <h4 class="font-semibold text-white mb-4">Соцмережі</h4>
+          <div class="flex space-x-3">
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+              <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="https://www.instagram.com/vlc.ua?utm_source=ig_web_button_share_sheet&igsh=a2NsbWJkY2VpanY0" class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-gray-800 text-center">
+        <p class="text-gray-400">© 2025 VLC.UA. Створено з ❤️ для української спільноти</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Simple search functionality
+    document.querySelector('input[type="text"]').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        alert('🔍 Пошук: "' + this.value + '"');
+      }
+    });
+  </script>
+</body>
+</html>
