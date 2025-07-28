@@ -272,48 +272,121 @@
   <nav class="navbar">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
-        <!-- Left side - Navigation menu -->
-        <div class="hidden md:flex items-center space-x-6">
-          <a href="#events" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Події</a>
-          <a href="#business" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Бізнес</a>
-	      <a href="#ads" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Оголошення</a>
-          <a href="#news" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Новини</a>
+        <!-- Left side - Menu button -->
+        <div class="flex items-center">
+          <button onclick="toggleMainMenu()" class="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
+            <i class="fas fa-bars text-gray-700 text-lg"></i>
+          </button>
         </div>
         
         <!-- Center - Logo -->
         <div class="flex items-center absolute left-1/2 transform -translate-x-1/2">
-          <img src="logo.png" alt="VLC.UA" class="logo" />
+          <img src="logo.png" alt="VLC.UA" class="logo cursor-pointer" onclick="window.location.reload()" />
         </div>
         
-        <!-- Right side - Navigation menu and actions -->
-        <div class="hidden md:flex items-center space-x-6">
-
-          <div class="flex items-center space-x-3 ml-4">
-            <div class="search-btn" onclick="openSearchModal()">
-              <i class="fas fa-search"></i>
-            </div>
-            <button class="btn-primary">Увійти</button>
-          </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div class="md:hidden flex items-center space-x-3">
+        <!-- Right side - Search button -->
+        <div class="flex items-center">
           <div class="search-btn" onclick="openSearchModal()">
             <i class="fas fa-search"></i>
           </div>
-          <button onclick="toggleMobileMenu()">
-            <i class="fas fa-bars text-gray-700"></i>
-          </button>
         </div>
       </div>
       
-      <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 py-4">
-        <div class="space-y-3">
-          <a href="#events" class="block py-2 text-gray-700 font-medium">Події</a>
-          <a href="#business" class="block py-2 text-gray-700 font-medium">Бізнес</a>
-          <a href="#ads" class="block py-2 text-gray-700 font-medium">Оголошення</a>
-          <a href="#news" class="block py-2 text-gray-700 font-medium">Новини</a>
-          <button class="btn-primary w-full mt-3">Увійти</button>
+      <!-- Main Menu Dropdown -->
+      <div id="main-menu" class="hidden border-t border-gray-200 py-4 bg-white/95 backdrop-blur-sm">
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Navigation Links -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 text-sm uppercase tracking-wide mb-3">Розділи</h4>
+            <a href="#events" class="flex items-center py-3 px-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 transition-colors">
+                <i class="fas fa-calendar-alt text-blue-600"></i>
+              </div>
+              <div>
+                <div class="font-medium">Події</div>
+                <div class="text-sm text-gray-500">Зустрічі та заходи</div>
+              </div>
+            </a>
+            
+            <a href="#business" class="flex items-center py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-200 transition-colors">
+                <i class="fas fa-store text-green-600"></i>
+              </div>
+              <div>
+                <div class="font-medium">Бізнес</div>
+                <div class="text-sm text-gray-500">Каталог підприємців</div>
+              </div>
+            </a>
+            
+            <a href="#ads" class="flex items-center py-3 px-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-purple-200 transition-colors">
+                <i class="fas fa-bullhorn text-purple-600"></i>
+              </div>
+              <div>
+                <div class="font-medium">Оголошення</div>
+                <div class="text-sm text-gray-500">Житло, робота, послуги</div>
+              </div>
+            </a>
+            
+            <a href="#news" class="flex items-center py-3 px-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-200 transition-colors">
+                <i class="fas fa-newspaper text-orange-600"></i>
+              </div>
+              <div>
+                <div class="font-medium">Новини</div>
+                <div class="text-sm text-gray-500">Актуальні новини</div>
+              </div>
+            </a>
+          </div>
+          
+          <!-- Account & Actions -->
+          <div class="space-y-4">
+            <h4 class="font-semibold text-gray-900 text-sm uppercase tracking-wide mb-3">Акаунт</h4>
+            
+            <button onclick="showRegistrationForm()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 transition-colors">
+                <i class="fas fa-user-plus text-blue-600"></i>
+              </div>
+              <div class="text-left">
+                <div class="font-medium">Реєстрація</div>
+                <div class="text-sm text-gray-500">Приєднатися до спільноти</div>
+              </div>
+            </button>
+            
+            <button onclick="showLoginForm()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-indigo-200 transition-colors">
+                <i class="fas fa-sign-in-alt text-indigo-600"></i>
+              </div>
+              <div class="text-left">
+                <div class="font-medium">Увійти</div>
+                <div class="text-sm text-gray-500">Для зареєстрованих</div>
+              </div>
+            </button>
+            
+            <div class="pt-4 mt-4 border-t border-gray-200">
+              <button onclick="showContactInfo()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 group">
+                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-gray-200 transition-colors">
+                  <i class="fas fa-headset text-gray-600"></i>
+                </div>
+                <div class="text-left">
+                  <div class="font-medium">Підтримка</div>
+                  <div class="text-sm text-gray-500">Допомога та контакти</div>
+                </div>
+              </button>
+              
+              <div class="flex items-center justify-center space-x-3 mt-4 pt-4 border-t border-gray-100">
+                <a href="#" class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-blue-600 transition-all duration-300">
+                  <i class="fab fa-facebook-f text-sm"></i>
+                </a>
+                <a href="#" class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-blue-500 transition-all duration-300">
+                  <i class="fab fa-telegram-plane text-sm"></i>
+                </a>
+                <a href="https://www.instagram.com/vlc.ua?utm_source=ig_web_button_share_sheet&igsh=a2NsbWJkY2VpanY0" class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-pink-600 transition-all duration-300">
+                  <i class="fab fa-instagram text-sm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -715,10 +788,24 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
+    // Main menu toggle
+    function toggleMainMenu() {
+      const menu = document.getElementById('main-menu');
       menu.classList.toggle('hidden');
+      
+      // Close search modal if open
+      closeSearchModal();
+    }
+
+    // Mobile menu toggle (keeping for compatibility)
+    function toggleMobileMenu() {
+      toggleMainMenu();
+    }
+
+    // Login form
+    function showLoginForm() {
+      alert('🔐 Форма входу\n\n• Email/телефон\n• Пароль\n• Запам\'ятати мене\n• Забули пароль?');
+      toggleMainMenu(); // Close menu after action
     }
 
     // Search modal functions
