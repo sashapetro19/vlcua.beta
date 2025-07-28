@@ -68,7 +68,7 @@
       transform: scale(1.1);
     }
     
-    .search-modal {
+    .modal {
       position: fixed;
       top: 0;
       left: 0;
@@ -85,23 +85,29 @@
       transition: all 0.3s ease;
     }
     
-    .search-modal.active {
+    .modal.active {
       opacity: 1;
       visibility: visible;
     }
     
-    .search-modal-content {
+    .modal-content {
       background: white;
       border-radius: 16px;
       padding: 32px;
       width: 90%;
       max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
       transform: translateY(20px);
       transition: transform 0.3s ease;
     }
     
-    .search-modal.active .search-modal-content {
+    .modal.active .modal-content {
       transform: translateY(0);
+    }
+    
+    .modal-content-large {
+      max-width: 700px;
     }
     
     .btn-primary {
@@ -235,7 +241,49 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
     }
-    
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      background: #ffffff;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .form-required {
+      color: #ef4444;
+    }
+
     @media (max-width: 768px) {
       .hero-title {
         font-size: 2.5rem;
@@ -250,9 +298,17 @@
         font-size: 14px;
       }
       
-      .search-modal-content {
+      .modal-content {
         padding: 24px;
         margin: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full-width {
+        grid-column: span 1;
       }
     }
     
@@ -281,13 +337,17 @@
         
         <!-- Center - Logo -->
         <div class="flex items-center absolute left-1/2 transform -translate-x-1/2">
-          <img src="logo.png" alt="VLC.UA" class="logo cursor-pointer" onclick="window.location.reload()" />
+          <img src="logo.png" alt="VLC.UA" class="logo cursor-pointer" onclick="window.location.reload()" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+          <div class="text-2xl font-bold text-blue-600" style="display:none;">VLC.UA</div>
         </div>
         
-        <!-- Right side - Search button -->
-        <div class="flex items-center">
-          <div class="search-btn" onclick="openSearchModal()">
+        <!-- Right side - Search and Add buttons -->
+        <div class="flex items-center space-x-3">
+          <div class="search-btn" onclick="openModal('search')">
             <i class="fas fa-search"></i>
+          </div>
+          <div class="search-btn bg-blue-100 border-blue-200 text-blue-600 hover:bg-blue-600 hover:text-white" onclick="openModal('add')">
+            <i class="fas fa-plus"></i>
           </div>
         </div>
       </div>
@@ -339,42 +399,22 @@
             </a>
           </div>
           
-          <!-- Account & Actions -->
+          <!-- Contact & Social -->
           <div class="space-y-4">
-            <h4 class="font-semibold text-gray-900 text-sm uppercase tracking-wide mb-3">Акаунт</h4>
+            <h4 class="font-semibold text-gray-900 text-sm uppercase tracking-wide mb-3">Зв'язок</h4>
             
-            <button onclick="showRegistrationForm()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group">
-              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 transition-colors">
-                <i class="fas fa-user-plus text-blue-600"></i>
+            <button onclick="showContactInfo()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 group">
+              <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-gray-200 transition-colors">
+                <i class="fas fa-headset text-gray-600"></i>
               </div>
               <div class="text-left">
-                <div class="font-medium">Реєстрація</div>
-                <div class="text-sm text-gray-500">Приєднатися до спільноти</div>
-              </div>
-            </button>
-            
-            <button onclick="showLoginForm()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200 group">
-              <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-indigo-200 transition-colors">
-                <i class="fas fa-sign-in-alt text-indigo-600"></i>
-              </div>
-              <div class="text-left">
-                <div class="font-medium">Увійти</div>
-                <div class="text-sm text-gray-500">Для зареєстрованих</div>
+                <div class="font-medium">Підтримка</div>
+                <div class="text-sm text-gray-500">Допомога та контакти</div>
               </div>
             </button>
             
             <div class="pt-4 mt-4 border-t border-gray-200">
-              <button onclick="showContactInfo()" class="w-full flex items-center py-3 px-3 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 group">
-                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-gray-200 transition-colors">
-                  <i class="fas fa-headset text-gray-600"></i>
-                </div>
-                <div class="text-left">
-                  <div class="font-medium">Підтримка</div>
-                  <div class="text-sm text-gray-500">Допомога та контакти</div>
-                </div>
-              </button>
-              
-              <div class="flex items-center justify-center space-x-3 mt-4 pt-4 border-t border-gray-100">
+              <div class="flex items-center justify-center space-x-3">
                 <a href="#" class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 hover:text-white hover:bg-blue-600 transition-all duration-300">
                   <i class="fab fa-facebook-f text-sm"></i>
                 </a>
@@ -392,55 +432,22 @@
     </div>
   </nav>
 
-  <!-- Search Modal -->
-  <div id="searchModal" class="search-modal">
-    <div class="search-modal-content">
+  <!-- Universal Modal -->
+  <div id="modal" class="modal">
+    <div id="modal-content" class="modal-content">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-semibold text-gray-900">Пошук</h3>
-        <button onclick="closeSearchModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+        <h3 id="modal-title" class="text-xl font-semibold text-gray-900">Modal</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-xl">
           <i class="fas fa-times"></i>
         </button>
       </div>
-      
-      <div class="relative mb-6">
-        <input 
-          type="text" 
-          placeholder="Що шукаєте?"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-lg"
-          id="searchInput"
-          autofocus
-        >
-        <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600">
-          <i class="fas fa-search"></i>
-        </button>
+      <div id="modal-body">
+        <!-- Modal content will be dynamically inserted here -->
       </div>
-      
-      <div class="mb-4">
-        <p class="text-sm text-gray-600 mb-3">Популярні категорії:</p>
-        <div class="flex flex-wrap gap-2">
-          <span class="bg-gray-100 hover:bg-blue-100 px-3 py-1 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('підприємці')">
-            💼 Підприємці
-          </span>
-          <span class="bg-gray-100 hover:bg-blue-100 px-3 py-1 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('житло')">
-            🏠 Житло
-          </span>
-          <span class="bg-gray-100 hover:bg-blue-100 px-3 py-1 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('робота')">
-            💼 Робота
-          </span>
-          <span class="bg-gray-100 hover:bg-blue-100 px-3 py-1 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('зустрічі')">
-            👥 Зустрічі
-          </span>
-        </div>
-      </div>
-      
-      <button class="btn-primary w-full" onclick="performSearch()">
-        <i class="fas fa-search mr-2"></i>
-        Знайти
-      </button>
     </div>
   </div>
 
-  <!-- Quick Actions Section - Moved to top -->
+  <!-- Quick Actions Section -->
   <section class="pt-24 pb-8 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-8 fade-in">
@@ -459,8 +466,8 @@
               <i class="fas fa-calendar-plus text-blue-600 text-xl"></i>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Створити подію</h3>
-              <p class="text-sm text-gray-600">або переглянути існуючі</p>
+              <h3 class="font-semibold text-gray-900">Переглянути події</h3>
+              <p class="text-sm text-gray-600">зустрічі спільноти</p>
             </div>
           </div>
           <div class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full inline-block">
@@ -474,8 +481,8 @@
               <i class="fas fa-store text-green-600 text-xl"></i>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Додати бізнес</h3>
-              <p class="text-sm text-gray-600">або знайти послугу</p>
+              <h3 class="font-semibold text-gray-900">Каталог бізнесу</h3>
+              <p class="text-sm text-gray-600">знайти послугу</p>
             </div>
           </div>
           <div class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full inline-block">
@@ -486,10 +493,10 @@
         <div class="quick-action fade-in" onclick="navigateToSection('ads')" style="animation-delay: 0.2s;">
           <div class="flex items-center mb-3">
             <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-plus-circle text-purple-600 text-xl"></i>
+              <i class="fas fa-list text-purple-600 text-xl"></i>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Подати оголошення</h3>
+              <h3 class="font-semibold text-gray-900">Оголошення</h3>
               <p class="text-sm text-gray-600">житло, робота, послуги</p>
             </div>
           </div>
@@ -498,7 +505,7 @@
           </div>
         </div>
         
-        <div class="quick-action fade-in" onclick="openSearchModal()" style="animation-delay: 0.3s;">
+        <div class="quick-action fade-in" onclick="openModal('search')" style="animation-delay: 0.3s;">
           <div class="flex items-center mb-3">
             <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
               <i class="fas fa-search text-orange-600 text-xl"></i>
@@ -623,7 +630,7 @@
               <i class="fas fa-users mr-1"></i>
               23 учасники
             </span>
-            <span class="text-blue-600 font-medium hover:text-blue-700">Приєднатися</span>
+            <span class="text-blue-600 font-medium hover:text-blue-700">Деталі</span>
           </div>
         </div>
         
@@ -681,21 +688,21 @@
     <div class="max-w-4xl mx-auto text-center px-4">
       <div class="fade-in">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
-          Приєднуйтесь до спільноти
+          Українська спільнота у Валенсії
         </h2>
         <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-          Станьте частиною найактивнішої української спільноти у Валенсії
+          Знайдіть все необхідне для комфортного життя в Іспанії
         </p>
       </div>
       
       <div class="fade-in flex flex-col sm:flex-row gap-4 justify-center mb-8" style="animation-delay: 0.2s;">
-        <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 hover:transform hover:scale-105" onclick="showRegistrationForm()">
-          <i class="fas fa-user-plus mr-2"></i>
-          Зареєструватися безкоштовно
-        </button>
-        <button class="border-2 border-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all duration-300 text-white" onclick="showContactInfo()">
+        <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 hover:transform hover:scale-105" onclick="showContactInfo()">
           <i class="fas fa-phone mr-2"></i>
           Зв'язатися з нами
+        </button>
+        <button class="border-2 border-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all duration-300 text-white" onclick="openModal('search')">
+          <i class="fas fa-search mr-2"></i>
+          Почати пошук
         </button>
       </div>
       
@@ -706,7 +713,7 @@
         </div>
         <div class="flex items-center justify-center py-2">
           <i class="fas fa-shield-alt text-blue-400 mr-2"></i>
-          Захист даних
+          Перевірена інформація
         </div>
         <div class="flex items-center justify-center py-2">
           <i class="fas fa-users text-purple-400 mr-2"></i>
@@ -714,7 +721,7 @@
         </div>
         <div class="flex items-center justify-center py-2">
           <i class="fas fa-headset text-orange-400 mr-2"></i>
-          24/7 Підтримка
+          Підтримка спільноти
         </div>
       </div>
     </div>
@@ -725,7 +732,7 @@
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div class="fade-in">
-          <img src="logo.png" alt="VLC.UA" class="h-10 mb-4 filter brightness-0 invert" />
+          <div class="text-white text-2xl font-bold mb-4">VLC.UA</div>
           <p class="text-gray-400 mb-4 text-sm">
             Платформа для об'єднання української спільноти у Валенсії
           </p>
@@ -788,48 +795,331 @@
   </footer>
 
   <script>
-    // Main menu toggle
-    function toggleMainMenu() {
-      const menu = document.getElementById('main-menu');
-      menu.classList.toggle('hidden');
+    // Modal management
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    // Form configurations
+    const formConfigs = {
+      event: {
+        title: 'Додати подію',
+        icon: 'calendar-plus',
+        color: 'blue',
+        fields: [
+          { type: 'text', name: 'title', label: 'Назва події', required: true, placeholder: 'Зустріч підприємців', fullWidth: true },
+          { type: 'textarea', name: 'description', label: 'Опис', required: true, placeholder: 'Детальний опис події...', fullWidth: true },
+          { type: 'date', name: 'date', label: 'Дата', required: true },
+          { type: 'time', name: 'time', label: 'Час', required: true },
+          { type: 'text', name: 'location', label: 'Місце проведення', required: true, placeholder: 'Центр Валенсії', fullWidth: true },
+          { type: 'number', name: 'max_participants', label: 'Максимум учасників', placeholder: '50' },
+          { type: 'text', name: 'contact', label: 'Контакт для зв\'язку', required: true, placeholder: '@username або телефон' }
+        ]
+      },
+      business: {
+        title: 'Додати бізнес',
+        icon: 'store',
+        color: 'green',
+        fields: [
+          { type: 'text', name: 'business_name', label: 'Назва бізнесу', required: true, placeholder: 'Пекарня "Хліб і Воля"', fullWidth: true },
+          { type: 'select', name: 'category', label: 'Категорія', required: true, options: [
+            'Ресторани та кафе', 'Магазини', 'Послуги краси', 'Ремонт та будівництво', 
+            'Освіта', 'Медицина', 'Юридичні послуги', 'IT послуги', 'Інше'
+          ]},
+          { type: 'textarea', name: 'description', label: 'Опис', required: true, placeholder: 'Що ви пропонуєте...', fullWidth: true },
+          { type: 'text', name: 'address', label: 'Адреса', required: true, placeholder: 'Вулиця, номер будинку', fullWidth: true },
+          { type: 'text', name: 'phone', label: 'Телефон', placeholder: '+34 123 456 789' },
+          { type: 'email', name: 'email', label: 'Email', placeholder: 'info@business.com' },
+          { type: 'text', name: 'website', label: 'Веб-сайт', placeholder: 'https://website.com', fullWidth: true },
+          { type: 'text', name: 'working_hours', label: 'Години роботи', placeholder: 'Пн-Пт: 9:00-18:00', fullWidth: true }
+        ]
+      },
+      housing: {
+        title: 'Додати житло',
+        icon: 'home',
+        color: 'purple',
+        fields: [
+          { type: 'select', name: 'type', label: 'Тип оголошення', required: true, options: [
+            'Здам в оренду', 'Шукаю для оренди', 'Продам', 'Куплю', 'Співмешканець'
+          ]},
+          { type: 'select', name: 'property_type', label: 'Тип житла', required: true, options: [
+            'Квартира', 'Будинок', 'Кімната', 'Студія', 'Комерційне приміщення'
+          ]},
+          { type: 'text', name: 'title', label: 'Заголовок', required: true, placeholder: '2-кімнатна квартира в центрі', fullWidth: true },
+          { type: 'textarea', name: 'description', label: 'Опис', required: true, placeholder: 'Детальний опис житла...', fullWidth: true },
+          { type: 'text', name: 'location', label: 'Район/Адреса', required: true, placeholder: 'Центр, біля метро' },
+          { type: 'number', name: 'price', label: 'Ціна (€)', required: true, placeholder: '850' },
+          { type: 'number', name: 'rooms', label: 'Кількість кімнат', placeholder: '2' },
+          { type: 'number', name: 'area', label: 'Площа (м²)', placeholder: '80' },
+          { type: 'text', name: 'contact', label: 'Контакт', required: true, placeholder: 'Телефон або Telegram', fullWidth: true }
+        ]
+      },
+      job: {
+        title: 'Додати роботу',
+        icon: 'briefcase',
+        color: 'orange',
+        fields: [
+          { type: 'select', name: 'type', label: 'Тип оголошення', required: true, options: [
+            'Пропоную роботу', 'Шукаю роботу'
+          ]},
+          { type: 'text', name: 'title', label: 'Назва позиції', required: true, placeholder: 'Менеджер з продажу' },
+          { type: 'select', name: 'category', label: 'Сфера діяльності', required: true, options: [
+            'IT', 'Продажі', 'Маркетинг', 'Фінанси', 'Освіта', 'Медицина', 
+            'Ресторанний бізнес', 'Будівництво', 'Логістика', 'Інше'
+          ]},
+          { type: 'textarea', name: 'description', label: 'Опис', required: true, placeholder: 'Обов\'язки, вимоги, умови...', fullWidth: true },
+          { type: 'text', name: 'location', label: 'Місце роботи', required: true, placeholder: 'Валенсія, центр' },
+          { type: 'text', name: 'salary', label: 'Зарплата', placeholder: '1500-2000€ або за домовленістю' },
+          { type: 'select', name: 'employment_type', label: 'Тип зайнятості', required: true, options: [
+            'Повний день', 'Частковий', 'Проектна робота', 'Стажування'
+          ]},
+          { type: 'text', name: 'contact', label: 'Контакт', required: true, placeholder: 'Email або телефон', fullWidth: true }
+        ]
+      }
+    };
+
+    function openModal(type) {
+      switch(type) {
+        case 'search':
+          showSearchModal();
+          break;
+        case 'add':
+          showAddOptionsModal();
+          break;
+        default:
+          if (formConfigs[type]) {
+            showFormModal(type);
+          }
+      }
+    }
+
+    function showSearchModal() {
+      modalTitle.innerHTML = '<i class="fas fa-search text-blue-600 mr-2"></i>Пошук';
+      modalBody.innerHTML = `
+        <div class="space-y-4">
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="Що шукаєте?"
+              class="form-input pl-12 text-lg h-14"
+              id="searchInput"
+              autofocus
+            >
+            <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+          
+          <div>
+            <p class="text-sm text-gray-600 mb-3">Популярні категорії:</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('підприємці')">
+                💼 Підприємці
+              </span>
+              <span class="bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('житло')">
+                🏠 Житло
+              </span>
+              <span class="bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('робота')">
+                💼 Робота
+              </span>
+              <span class="bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded-full text-sm cursor-pointer transition-colors" onclick="setSearchTerm('зустрічі')">
+                👥 Зустрічі
+              </span>
+            </div>
+          </div>
+          
+          <div class="flex gap-3 pt-4">
+            <button class="btn-primary flex-1" onclick="performSearch()">
+              <i class="fas fa-search mr-2"></i>
+              Знайти
+            </button>
+            <button class="btn-secondary" onclick="closeModal()">
+              Скасувати
+            </button>
+          </div>
+        </div>
+      `;
       
-      // Close search modal if open
-      closeSearchModal();
-    }
-
-    // Mobile menu toggle (keeping for compatibility)
-    function toggleMobileMenu() {
-      toggleMainMenu();
-    }
-
-    // Login form
-    function showLoginForm() {
-      alert('🔐 Форма входу\n\n• Email/телефон\n• Пароль\n• Запам\'ятати мене\n• Забули пароль?');
-      toggleMainMenu(); // Close menu after action
-    }
-
-    // Search modal functions
-    function openSearchModal() {
-      const modal = document.getElementById('searchModal');
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      
+      // Add enter key listener
       setTimeout(() => {
-        document.getElementById('searchInput').focus();
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              performSearch();
+            }
+          });
+        }
       }, 300);
     }
 
-    function closeSearchModal() {
-      const modal = document.getElementById('searchModal');
+    function showAddOptionsModal() {
+      modalTitle.innerHTML = '<i class="fas fa-plus text-blue-600 mr-2"></i>Додати';
+      modalBody.innerHTML = `
+        <div class="space-y-4">
+          <p class="text-sm text-gray-600 mb-4">Оберіть, що ви хочете додати:</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 text-left group" onclick="openModal('event')">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200">
+                  <i class="fas fa-calendar-plus text-blue-600 text-sm"></i>
+                </div>
+                <span class="font-medium text-gray-900">Подія</span>
+              </div>
+              <p class="text-xs text-gray-500">Зустріч, захід, семінар</p>
+            </button>
+            
+            <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all duration-200 text-left group" onclick="openModal('business')">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-200">
+                  <i class="fas fa-store text-green-600 text-sm"></i>
+                </div>
+                <span class="font-medium text-gray-900">Бізнес</span>
+              </div>
+              <p class="text-xs text-gray-500">Послуга, магазин, ресторан</p>
+            </button>
+            
+            <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200 text-left group" onclick="openModal('housing')">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-purple-200">
+                  <i class="fas fa-home text-purple-600 text-sm"></i>
+                </div>
+                <span class="font-medium text-gray-900">Житло</span>
+              </div>
+              <p class="text-xs text-gray-500">Оренда, продаж, пошук</p>
+            </button>
+            
+            <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 text-left group" onclick="openModal('job')">
+              <div class="flex items-center mb-2">
+                <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-200">
+                  <i class="fas fa-briefcase text-orange-600 text-sm"></i>
+                </div>
+                <span class="font-medium text-gray-900">Робота</span>
+              </div>
+              <p class="text-xs text-gray-500">Вакансії, резюме</p>
+            </button>
+          </div>
+          
+          <div class="text-center pt-4">
+            <button class="btn-secondary" onclick="closeModal()">
+              Скасувати
+            </button>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showFormModal(type) {
+      const config = formConfigs[type];
+      modalContent.classList.add('modal-content-large');
+      modalTitle.innerHTML = `<i class="fas fa-${config.icon} text-${config.color}-600 mr-2"></i>${config.title}`;
+      
+      let formHTML = '<form id="dynamicForm" class="space-y-4"><div class="form-grid">';
+      
+      config.fields.forEach(field => {
+        formHTML += generateFormField(field);
+      });
+      
+      formHTML += `
+        </div>
+        <div class="flex gap-3 pt-6">
+          <button type="submit" class="btn-primary flex-1">
+            <i class="fas fa-paper-plane mr-2"></i>
+            Відправити на модерацію
+          </button>
+          <button type="button" onclick="closeModal()" class="btn-secondary">
+            Скасувати
+          </button>
+        </div>
+      </form>`;
+      
+      modalBody.innerHTML = formHTML;
+      
+      // Add form submit handler
+      const form = document.getElementById('dynamicForm');
+      form.addEventListener('submit', handleFormSubmit);
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function generateFormField(field) {
+      const fullWidthClass = field.fullWidth ? 'full-width' : '';
+      
+      let fieldHTML = `
+        <div class="form-group ${fullWidthClass}">
+          <label class="form-label">
+            ${field.label}
+            ${field.required ? '<span class="form-required">*</span>' : ''}
+          </label>
+      `;
+      
+      switch (field.type) {
+        case 'text':
+        case 'email':
+        case 'number':
+        case 'date':
+        case 'time':
+          fieldHTML += `
+            <input 
+              type="${field.type}" 
+              name="${field.name}" 
+              placeholder="${field.placeholder || ''}"
+              ${field.required ? 'required' : ''}
+              class="form-input"
+            >
+          `;
+          break;
+        case 'textarea':
+          fieldHTML += `
+            <textarea 
+              name="${field.name}" 
+              placeholder="${field.placeholder || ''}"
+              ${field.required ? 'required' : ''}
+              rows="4"
+              class="form-input resize-none"
+            ></textarea>
+          `;
+          break;
+        case 'select':
+          fieldHTML += `<select name="${field.name}" ${field.required ? 'required' : ''} class="form-input">`;
+          fieldHTML += `<option value="">Оберіть...</option>`;
+          field.options.forEach(option => {
+            fieldHTML += `<option value="${option}">${option}</option>`;
+          });
+          fieldHTML += `</select>`;
+          break;
+      }
+      
+      fieldHTML += `</div>`;
+      return fieldHTML;
+    }
+
+    function closeModal() {
       modal.classList.remove('active');
+      modalContent.classList.remove('modal-content-large');
       document.body.style.overflow = 'auto';
     }
 
     function setSearchTerm(term) {
-      document.getElementById('searchInput').value = term;
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.value = term;
+      }
     }
 
     function performSearch() {
-      const searchTerm = document.getElementById('searchInput').value;
+      const searchInput = document.getElementById('searchInput');
+      const searchTerm = searchInput ? searchInput.value : '';
+      
       if (searchTerm.trim()) {
         const btn = event.target;
         const originalText = btn.innerHTML;
@@ -838,22 +1128,53 @@
         setTimeout(() => {
           btn.innerHTML = originalText;
           alert('🔍 Результати пошуку для: "' + searchTerm + '"\n\n• 12 подій\n• 8 бізнесів\n• 23 оголошення');
-          closeSearchModal();
+          closeModal();
         }, 1000);
       }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Show loading state
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Відправляємо...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        alert('✅ Дякуємо!\n\nВаше оголошення відправлено на модерацію.\nПісля перевірки воно з\'явиться на сайті.\n\nЗазвичай це займає до 24 годин.');
+        closeModal();
+        
+        console.log('Form submitted:', data);
+      }, 2000);
+    }
+
+    // Menu toggle
+    function toggleMainMenu() {
+      const menu = document.getElementById('main-menu');
+      menu.classList.toggle('hidden');
+      closeModal();
     }
 
     // Navigation functions
     function navigateToSection(section) {
       const actions = {
         'events': () => {
-          alert('🎉 Переходимо до розділу "Події"\n\n• Переглянути майбутні події\n• Створити нову подію\n• Приєднатися до зустрічей');
+          alert('🎉 Переходимо до розділу "Події"\n\n• Переглянути майбутні події\n• Зустрічі спільноти\n• Культурні заходи');
         },
         'business': () => {
-          alert('🏪 Переходимо до каталогу бізнесу\n\n• Знайти послуги\n• Додати свій бізнес\n• Переглянути відгуки');
+          alert('🏪 Переходимо до каталогу бізнесу\n\n• Знайти послуги\n• Українські підприємці\n• Переглянути відгуки');
         },
         'ads': () => {
-          alert('📢 Розділ оголошень\n\n• Подати оголошення\n• Знайти житло\n• Пошук роботи');
+          alert('📢 Розділ оголошень\n\n• Житло для оренди\n• Пошук роботи\n• Продаж товарів');
         },
         'news': () => {
           alert('📰 Останні новини спільноти\n\n• Актуальні події\n• Важливі оголошення\n• Корисна інформація');
@@ -868,7 +1189,7 @@
     // Activity details
     function showActivityDetails(type) {
       const details = {
-        'event': 'Зустріч підприємців - деталі події та реєстрація',
+        'event': 'Зустріч підприємців - деталі події та контакти',
         'business': 'Пекарня "Хліб і Воля" - контакти та години роботи',
         'ad': 'Квартира в центрі - детальний опис та контакти'
       };
@@ -876,34 +1197,21 @@
       alert('📋 ' + details[type] + '\n\nТут буде детальна інформація...');
     }
 
-    // Registration form
-    function showRegistrationForm() {
-      alert('📝 Форма реєстрації\n\n• Швидка реєстрація через email\n• Або через соціальні мережі\n• Підтвердження протягом 5 хвилин');
-    }
-
     // Contact info
     function showContactInfo() {
-      alert('📞 Контактна інформація\n\n📧 Email: info@vlc.ua\n📱 Telegram: @vlc_valencia\n📍 Valencia, España\n\nПідтримка: 24/7');
+      alert('📞 Контактна інформація\n\n📧 Email: info@vlc.ua\n📱 Telegram: @vlc_valencia\n📍 Valencia, España\n\nПідтримка спільноти: щодня');
     }
 
-    // Close modal on outside click
-    document.getElementById('searchModal').addEventListener('click', function(e) {
+    // Event listeners
+    modal.addEventListener('click', function(e) {
       if (e.target === this) {
-        closeSearchModal();
+        closeModal();
       }
     });
 
-    // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        closeSearchModal();
-      }
-    });
-
-    // Search on Enter key
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        performSearch();
+        closeModal();
       }
     });
 
