@@ -3,94 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Події — VLC.UA</title>
+  <title>VLC.UA - Події в Валенсії</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <style>
-    * { font-family: 'Inter', sans-serif; }
-    body {
-      background: #f9f9f9;
-      color: #111827;
+    * {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     }
-    .glass {
-      backdrop-filter: blur(24px);
-      background-color: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    .card {
+    
+    .event-card {
       background: white;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      transition: all 0.3s ease;
-      position: relative;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.2);
     }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    
+    .event-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
-    .card::before {
+    
+    .event-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #3b82f6, #fbbf24);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      height: 6px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 300% 100%;
+      animation: gradient 8s ease infinite;
     }
-    .card:hover::before {
-      opacity: 1;
-    }
-    .neon-button {
-      transition: all 0.3s ease;
-    }
-    .neon-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .category-badge {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge-meetup { background: #dbeafe; color: #1e40af; }
-    .badge-culture { background: #fce7f3; color: #be185d; }
-    .badge-education { background: #dcfce7; color: #166534; }
-    .badge-business { background: #fff7ed; color: #c2410c; }
-    .badge-concert { background: #f3e8ff; color: #7c3aed; }
-    .badge-activity { background: #fef3c7; color: #d97706; }
     
-    .filter-pill {
-      padding: 8px 16px;
-      border-radius: 25px;
-      border: 2px solid #e5e7eb;
-      background: white;
-      color: #6b7280;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 500;
-    }
-    .filter-pill:hover {
-      border-color: #3b82f6;
-      color: #3b82f6;
-    }
-    .filter-pill.active {
-      background: #3b82f6;
-      border-color: #3b82f6;
-      color: white;
+    @keyframes gradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
     
     .event-image {
+      width: 100%;
       height: 200px;
+      object-fit: cover;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
       position: relative;
       overflow: hidden;
     }
+    
     .event-image::before {
       content: '';
       position: absolute;
@@ -98,696 +65,1485 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.2);
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
     }
     
-    .floating-action {
+    .event-date-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 8px 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .event-type-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .event-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .status-upcoming {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    
+    .status-today {
+      background: #fff3e0;
+      color: #f57c00;
+      animation: pulse 2s infinite;
+    }
+    
+    .status-past {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .participants-avatars {
+      display: flex;
+      align-items: center;
+      margin-left: -8px;
+    }
+    
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-left: -8px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    
+    .filter-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+    }
+    
+    .filter-btn.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+    }
+    
+    .floating-add-btn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 40;
+      bottom: 24px;
+      right: 24px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 8px 32px rgba(255,107,53,0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+      border: none;
+    }
+    
+    .floating-add-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 12px 40px rgba(255,107,53,0.5);
+    }
+    
+    .calendar-widget {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      position: sticky;
+      top: 100px;
+    }
+    
+    .calendar-day {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    
+    .calendar-day:hover {
+      background: #f3f4f6;
+    }
+    
+    .calendar-day.has-event {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      position: relative;
+    }
+    
+    .calendar-day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 6px;
+      height: 6px;
+      background: #fbbf24;
+      border-radius: 50%;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      font-size: 16px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+    }
+    
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #dee2e6;
+    }
+    
+    .btn-secondary:hover {
+      background: #e2e6ea;
+      transform: translateY(-1px);
+    }
+    
+    .input {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      min-height: 48px;
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+    }
+    
+    textarea.input {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      z-index: 2000;
+      transform: translateX(400px);
+      transition: transform 0.3s;
+      box-shadow: 0 8px 32px rgba(16,185,129,0.3);
+      max-width: 320px;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.error {
+      background: #ef4444;
+      box-shadow: 0 8px 32px rgba(239,68,68,0.3);
+    }
+    
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .event-card {
+        border-radius: 16px;
+        margin-bottom: 16px;
+      }
+      
+      .event-card:hover {
+        transform: translateY(-4px) scale(1.01);
+      }
+      
+      .event-image {
+        height: 160px;
+        font-size: 2rem;
+      }
+      
+      .event-date-badge {
+        top: 12px;
+        right: 12px;
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .event-type-badge {
+        top: 12px;
+        left: 12px;
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      .filter-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+        border-radius: 20px;
+      }
+      
+      .floating-add-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        font-size: 20px;
+      }
+      
+      .modal-content {
+        padding: 24px;
+        border-radius: 20px;
+        margin: 16px;
+      }
+      
+      .calendar-widget {
+        padding: 16px;
+        border-radius: 16px;
+      }
+      
+      .notification {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        transform: translateY(-100px);
+        text-align: center;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+      }
+    }
+    
+    /* Tablet styles */
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .event-card {
+        margin-bottom: 20px;
+      }
+      
+      .calendar-widget {
+        position: static;
+        margin-bottom: 24px;
+      }
+    }
+    
+    /* Touch improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .event-card:hover {
+        transform: none;
+      }
+      
+      .filter-btn:hover {
+        transform: none;
+      }
+      
+      .floating-add-btn:hover {
+        transform: scale(1.05);
+      }
+    }
+    
+    /* Hamburger Menu Styles */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 12px;
+      z-index: 1001;
+      position: relative;
+      min-height: 44px;
+      min-width: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: white;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+    
+    @media (max-width: 480px) {
+      .side-menu {
+        width: 100vw;
+        left: -100vw;
+      }
+    }
+    
+    .side-menu.active {
+      left: 0;
+    }
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 4px solid transparent;
+      min-height: 56px;
+      font-size: 16px;
+    }
+    
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: #667eea;
+      color: #667eea;
+    }
+    
+    .menu-item.active {
+      background: #f8f9fa;
+      border-left-color: #667eea;
+      color: #667eea;
+    }
+    
+    .menu-item i {
+      margin-right: 16px;
+      width: 24px;
+      font-size: 18px;
+    }
+    
+    .logo {
+      max-height: 40px;
+      width: auto;
     }
     
     @media (max-width: 768px) {
-      .floating-action {
-        bottom: 20px;
-        right: 20px;
+      .logo {
+        max-height: 36px;
       }
+      
+      .menu-item {
+        padding: 24px;
+        font-size: 18px;
+        min-height: 64px;
+      }
+    }
+    
+    .header-container {
+      height: 64px;
+    }
+    
+    @media (max-width: 768px) {
+      .header-container {
+        height: 56px;
+      }
+    }
+    
+    .filters-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .filters-scroll::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>
-<body>
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 p-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-yellow-400 rounded-xl flex items-center justify-center text-white font-bold text-sm">
-          VLC
-        </div>
-        <span class="font-extrabold text-xl">VLC.UA</span>
+<body class="bg-gray-50">
+  
+  <!-- Menu Overlay -->
+  <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+  
+  <!-- Side Menu -->
+  <div id="side-menu" class="side-menu">
+    <div class="p-6 border-b border-gray-200 text-center">
+      <img src="logo.png" alt="VLC.UA Logo" class="logo mx-auto mb-2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <h2 class="text-xl font-bold text-gray-800" style="display:none;">VLC.UA</h2>
+      <p class="text-sm text-gray-600">Українці в Валенсії</p>
+    </div>
+    
+    <nav class="py-4">
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        Головна
+      </a>
+      <a href="#" class="menu-item active">
+        <i class="fas fa-calendar"></i>
+        Події
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-store"></i>
+        Бізнес
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-home"></i>
+        Житло
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-briefcase"></i>
+        Робота
+      </a>
+      <div class="border-t border-gray-200 mt-4 pt-4">
+        <a href="#" class="menu-item">
+          <i class="fas fa-book"></i>
+          Корисні поради
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-file-alt"></i>
+          Документи
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-question-circle"></i>
+          Як зробити...
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-users"></i>
+          Про спільноту
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-envelope"></i>
+          Контакти
+        </a>
       </div>
-      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-        <a href="/events.html" class="text-blue-600 font-bold">Події</a>
-        <a href="business.html">Бізнес</a>
-        <a href="#ads">Оголошення</a>
-        <a href="#news">Новини</a>
-      </nav>
-      <button class="hidden md:inline-block bg-black text-white font-bold px-5 py-2 rounded-xl neon-button">Вхід</button>
-      <button class="md:hidden text-gray-800 text-xl" onclick="toggleMobileMenu()">
-        <i class="fas fa-bars"></i>
-      </button>
+    </nav>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="header-container flex justify-between items-center">
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        <!-- Logo -->
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+          <img src="logo.png" alt="VLC.UA Logo" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <h1 class="text-2xl font-bold text-blue-600" style="display:none;">VLC.UA</h1>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2">
+          <button onclick="openSearch()" class="text-gray-600 hover:text-blue-600 text-lg transition-colors p-2">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- Hero section -->
-  <section class="pt-32 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100 text-center px-4">
-    <h1 class="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Події</h1>
-    <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-6">Відкривай нові горизонти разом з українською спільнотою Валенсії — від бізнес-зустрічей до концертів</p>
-    <div class="flex flex-wrap justify-center gap-2 text-sm text-gray-500">
-      <span><i class="fas fa-calendar mr-1"></i> 25+ подій щомісяця</span>
-      <span><i class="fas fa-users mr-1"></i> 500+ учасників</span>
-      <span><i class="fas fa-star mr-1"></i> 4.8/5 рейтинг</span>
-    </div>
-  </section>
-
-  <!-- Розширені фільтри -->
-  <section class="bg-white py-8 border-b border-gray-100">
-    <div class="max-w-6xl mx-auto px-4">
-      <!-- Пошук -->
-      <div class="mb-6">
-        <div class="relative max-w-2xl mx-auto">
-          <input 
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Пошук за назвою, описом або локацією..."
-            class="w-full px-6 py-4 rounded-2xl border border-gray-200 bg-gray-50 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:bg-white text-lg"
-            oninput="filterEvents()"
-          />
-          <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500">
-            <i class="fas fa-search text-lg"></i>
-          </button>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-8">
+    
+    <!-- Hero Section -->
+    <section class="text-center mb-8 md:mb-12">
+      <div class="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 transform -skew-y-1"></div>
+        <div class="relative z-10">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">
+            Події в Валенсії 🎉
+          </h1>
+          <p class="text-lg md:text-xl mb-6 opacity-90 max-w-2xl mx-auto">
+            Долучайтеся до найцікавіших подій української спільноти
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+            <button onclick="openAddEventModal()" class="btn bg-white text-purple-600 hover:bg-gray-100 flex-1">
+              <i class="fas fa-plus mr-2"></i>Додати подію
+            </button>
+            <button onclick="scrollToCalendar()" class="btn bg-white bg-opacity-20 text-white hover:bg-opacity-30 flex-1">
+              <i class="fas fa-calendar mr-2"></i>Календар
+            </button>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Категорії -->
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold mb-3 text-gray-800">Категорії</h3>
-        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-          <button class="filter-pill active" data-category="all" onclick="setActiveFilter(this, 'all')">
-            <i class="fas fa-list mr-2"></i>Усі події
-          </button>
-          <button class="filter-pill" data-category="meetup" onclick="setActiveFilter(this, 'meetup')">
-            <i class="fas fa-handshake mr-2"></i>Мітапи
-          </button>
-          <button class="filter-pill" data-category="culture" onclick="setActiveFilter(this, 'culture')">
-            <i class="fas fa-palette mr-2"></i>Культура
-          </button>
-          <button class="filter-pill" data-category="education" onclick="setActiveFilter(this, 'education')">
-            <i class="fas fa-graduation-cap mr-2"></i>Освіта
-          </button>
-          <button class="filter-pill" data-category="business" onclick="setActiveFilter(this, 'business')">
-            <i class="fas fa-briefcase mr-2"></i>Бізнес
-          </button>
-          <button class="filter-pill" data-category="concert" onclick="setActiveFilter(this, 'concert')">
-            <i class="fas fa-music mr-2"></i>Концерти
-          </button>
-          <button class="filter-pill" data-category="activity" onclick="setActiveFilter(this, 'activity')">
-            <i class="fas fa-running mr-2"></i>Активності
-          </button>
+    <!-- Stats Section -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
+        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-calendar-week text-blue-600 text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="this-week-count">0</h3>
+        <p class="text-gray-600">Подій цього тижня</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-users text-green-600 text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="participants-count">0</h3>
+        <p class="text-gray-600">Учасників</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
+        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-heart text-purple-600 text-2xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="popular-count">0</h3>
+        <p class="text-gray-600">Популярних подій</p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="mb-8">
+      <div class="bg-white rounded-2xl p-4 shadow-sm">
+        <div class="filters-scroll">
+          <div class="flex gap-3 pb-2" style="min-width: max-content;">
+            <button class="filter-btn active" onclick="filterEvents('all', this)">
+              <i class="fas fa-list"></i>Всі події
+            </button>
+            <button class="filter-btn" onclick="filterEvents('social', this)">
+              <i class="fas fa-users"></i>Соціальні
+            </button>
+            <button class="filter-btn" onclick="filterEvents('cultural', this)">
+              <i class="fas fa-theater-masks"></i>Культурні
+            </button>
+            <button class="filter-btn" onclick="filterEvents('educational', this)">
+              <i class="fas fa-graduation-cap"></i>Освітні
+            </button>
+            <button class="filter-btn" onclick="filterEvents('business', this)">
+              <i class="fas fa-handshake"></i>Бізнес
+            </button>
+            <button class="filter-btn" onclick="filterEvents('sports', this)">
+              <i class="fas fa-running"></i>Спорт
+            </button>
+            <button class="filter-btn" onclick="filterEvents('charity', this)">
+              <i class="fas fa-heart"></i>Благодійність
+            </button>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Додаткові фільтри -->
-      <div class="flex flex-col md:flex-row gap-4 items-center">
-        <div class="flex gap-3">
-          <select id="dateFilter" class="px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-blue-500" onchange="filterEvents()">
-            <option value="all">Усі дати</option>
-            <option value="today">Сьогодні</option>
-            <option value="tomorrow">Завтра</option>
-            <option value="week">Цей тиждень</option>
-            <option value="month">Цей місяць</option>
-          </select>
-          
-          <select id="priceFilter" class="px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-blue-500" onchange="filterEvents()">
-            <option value="all">Усі ціни</option>
-            <option value="free">Безкоштовно</option>
-            <option value="paid">Платні</option>
-          </select>
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Events List -->
+      <div class="lg:col-span-3">
+        <div id="events-container" class="space-y-6">
+          <!-- Events will be loaded here -->
         </div>
         
-        <div class="flex items-center gap-2 text-sm text-gray-500">
-          <span>Сортування:</span>
-          <select id="sortFilter" class="px-3 py-1 rounded-lg border border-gray-200 text-gray-600" onchange="sortEvents()">
-            <option value="date">За датою</option>
-            <option value="popular">За популярністю</option>
-            <option value="alphabetical">За алфавітом</option>
-          </select>
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+          <button id="load-more-btn" onclick="loadMoreEvents()" class="btn btn-secondary">
+            <i class="fas fa-plus mr-2"></i>Завантажити ще
+          </button>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Статистика -->
-  <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-8 text-white">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        <div>
-          <div class="text-3xl font-bold">15</div>
-          <div class="text-blue-200">Подій цього тижня</div>
+      
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Mini Calendar -->
+        <div class="calendar-widget mb-6" id="calendar-section">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="fas fa-calendar-alt mr-2 text-purple-600"></i>
+            Календар подій
+          </h3>
+          <div id="mini-calendar">
+            <!-- Calendar will be generated here -->
+          </div>
         </div>
-        <div>
-          <div class="text-3xl font-bold">3</div>
-          <div class="text-blue-200">Концерти</div>
-        </div>
-        <div>
-          <div class="text-3xl font-bold">8</div>
-          <div class="text-blue-200">Безкоштовні</div>
-        </div>
-        <div>
-          <div class="text-3xl font-bold">250+</div>
-          <div class="text-blue-200">Учасників</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Карти подій -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-4">
-      <div id="eventsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         
-        <!-- Подія 1 - Мітап -->
-        <div class="card rounded-2xl overflow-hidden" data-category="meetup" data-date="2025-07-28" data-price="free">
-          <div class="event-image bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-            <i class="fas fa-handshake text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">28 липня • 19:00</div>
-              <span class="category-badge badge-meetup">Мітап</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Зустріч українських підприємців</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Networking-подія у самому серці Валенсії для власників бізнесу та стартаперів. Діляємося досвідом і будуємо зв'язки.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Centro Valencia</span>
-              </div>
-              <div class="flex items-center text-sm text-green-600 font-semibold">
-                <i class="fas fa-gift mr-1"></i>
-                <span>Безкоштовно</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="event-buissnes1.html" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
+        <!-- Upcoming Events -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="fas fa-clock mr-2 text-orange-600"></i>
+            Найближчі події
+          </h3>
+          <div id="upcoming-events" class="space-y-3">
+            <!-- Upcoming events will be loaded here -->
           </div>
         </div>
-
-        <!-- Подія 2 - Культура -->
-        <div class="card rounded-2xl overflow-hidden" data-category="culture" data-date="2025-07-30" data-price="free">
-          <div class="event-image bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
-            <i class="fas fa-film text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">30 липня • 18:00</div>
-              <span class="category-badge badge-culture">Культура</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Кіновечір: Українське кіно</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Спільний перегляд стрічки «Мої думки тихі» з обговоренням та смачним чаєм з українськими солодощами.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Sala Cultural</span>
-              </div>
-              <div class="flex items-center text-sm text-green-600 font-semibold">
-                <i class="fas fa-gift mr-1"></i>
-                <span>Безкоштовно</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подія 3 - Освіта -->
-        <div class="card rounded-2xl overflow-hidden" data-category="education" data-date="2025-08-05" data-price="free">
-          <div class="event-image bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-            <i class="fas fa-paint-brush text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">5 серпня • 10:00</div>
-              <span class="category-badge badge-education">Освіта</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Воркшоп з петриківки для дітей</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Майстер-клас із малювання петриківського розпису для дітей 6–12 років. Усі матеріали надаються.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Centro Cívico</span>
-              </div>
-              <div class="flex items-center text-sm text-green-600 font-semibold">
-                <i class="fas fa-gift mr-1"></i>
-                <span>Безкоштовно</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подія 4 - Концерт -->
-        <div class="card rounded-2xl overflow-hidden" data-category="concert" data-date="2025-08-10" data-price="paid">
-          <div class="event-image bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
-            <i class="fas fa-music text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">10 серпня • 21:00</div>
-              <span class="category-badge badge-concert">Концерт</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Вечір української музики</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Концерт українських виконавців з Валенсії. Від фолку до сучасної поп-музики. Запрошені зірки з України!</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Sala Mozart</span>
-              </div>
-              <div class="flex items-center text-sm text-blue-600 font-semibold">
-                <i class="fas fa-ticket-alt mr-1"></i>
-                <span>15€</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подія 5 - Активність -->
-        <div class="card rounded-2xl overflow-hidden" data-category="activity" data-date="2025-08-12" data-price="free">
-          <div class="event-image bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-            <i class="fas fa-running text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">12 серпня • 08:00</div>
-              <span class="category-badge badge-activity">Активність</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Ранкова пробіжка в парку</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Спільна пробіжка українською компанією. Підходить для всіх рівнів підготовки. Після — каву разом!</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Jardín del Turia</span>
-              </div>
-              <div class="flex items-center text-sm text-green-600 font-semibold">
-                <i class="fas fa-gift mr-1"></i>
-                <span>Безкоштовно</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Подія 6 - Бізнес -->
-        <div class="card rounded-2xl overflow-hidden" data-category="business" data-date="2025-08-15" data-price="paid">
-          <div class="event-image bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-            <i class="fas fa-briefcase text-white text-6xl opacity-80"></i>
-          </div>
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div class="text-sm text-gray-500">15 серпня • 17:00</div>
-              <span class="category-badge badge-business">Бізнес</span>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Семінар: Відкриття бізнесу в Іспанії</h3>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">Практичний семінар від експертів про юридичні аспекти, податки та можливості для українських підприємців.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                <span>Hotel Valencia</span>
-              </div>
-              <div class="flex items-center text-sm text-blue-600 font-semibold">
-                <i class="fas fa-ticket-alt mr-1"></i>
-                <span>25€</span>
-              </div>
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-100">
-              <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
-                Детальніше <i class="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
       </div>
+      
+    </div>
 
-      <!-- Повідомлення про відсутність результатів -->
-      <div id="noResults" class="hidden text-center py-16">
-        <i class="fas fa-search text-gray-400 text-6xl mb-4"></i>
-        <h3 class="text-2xl font-bold text-gray-600 mb-2">Нічого не знайдено</h3>
-        <p class="text-gray-500">Спробуйте змінити фільтри або пошуковий запит</p>
-      </div>
+  </main>
 
-      <!-- Кнопка завантажити більше -->
-      <div class="text-center mt-12">
-        <button class="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
-          <i class="fas fa-plus mr-2"></i>Завантажити більше подій
+  <!-- Floating Add Button -->
+  <button class="floating-add-btn" onclick="openAddEventModal()">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <!-- Add Event Modal -->
+  <div id="add-event-modal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold">Додати подію</h3>
+        <button onclick="closeModal('add-event-modal')" class="text-gray-500 hover:text-gray-700 p-2">
+          <i class="fas fa-times text-xl"></i>
         </button>
       </div>
+      
+      <form id="add-event-form" onsubmit="submitEvent(event)">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-2">Назва події</label>
+              <input type="text" name="title" class="input" placeholder="Назва вашої події" required>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Тип події</label>
+              <select name="type" class="input" required>
+                <option value="">Оберіть тип</option>
+                <option value="social">Соціальна</option>
+                <option value="cultural">Культурна</option>
+                <option value="educational">Освітня</option>
+                <option value="business">Бізнес</option>
+                <option value="sports">Спорт</option>
+                <option value="charity">Благодійність</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-2">Дата</label>
+              <input type="date" name="date" class="input" required>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Час</label>
+              <input type="time" name="time" class="input" required>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Місце проведення</label>
+            <input type="text" name="location" class="input" placeholder="Адреса або назва місця" required>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Опис події</label>
+            <textarea name="description" class="input" rows="4" placeholder="Розкажіть детальніше про вашу подію..." required></textarea>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-2">Контакт для зв'язку</label>
+              <input type="text" name="contact" class="input" placeholder="Телефон, email або Telegram" required>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Максимальна кількість учасників</label>
+              <input type="number" name="maxParticipants" class="input" placeholder="Необов'язково" min="1">
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <input type="checkbox" id="terms" required class="mt-1">
+            <label for="terms" class="text-sm text-gray-600 leading-relaxed">
+              Погоджуюся з правилами спільноти та підтверджую достовірність інформації
+            </label>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
+            <button type="submit" class="btn btn-primary flex-1">
+              <i class="fas fa-calendar-plus mr-2"></i>Створити подію
+            </button>
+            <button type="button" onclick="closeModal('add-event-modal')" class="btn btn-secondary sm:w-auto">
+              Скасувати
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-center text-white">
-    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Організовуєш подію?</h2>
-    <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">Розкажи про неї українській спільноті Валенсії та залучи більше учасників!</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#" class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold neon-button hover:shadow-2xl">
-        <i class="fas fa-plus mr-2"></i> Додати подію
-      </a>
-      <a href="#" class="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300">
-        <i class="fas fa-calendar-alt mr-2"></i> Календар подій
-      </a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 py-12">
-    <div class="max-w-6xl mx-auto px-4 text-gray-400 text-center">
-      <p class="mb-4">© 2025 VLC.UA — Платформа українців у Валенсії</p>
-      <div class="flex justify-center space-x-4 mb-4">
-        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-telegram-plane"></i></a>
-        <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
-      </div>
-      <p class="text-sm text-gray-500">Розроблено з ❤️ для української спільноти</p>
-    </div>
-  </footer>
-
-  <!-- Плаваюча кнопка -->
-  <div class="floating-action">
-    <a href="#" class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:scale-110">
-      <i class="fas fa-plus text-xl"></i>
-    </a>
   </div>
 
+  <!-- Search Modal -->
+  <div id="search-modal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-semibold">Пошук подій</h3>
+        <button onclick="closeModal('search-modal')" class="text-gray-500 hover:text-gray-700 p-2">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-4">
+        <input type="text" id="search-input" placeholder="Назва події, місце або опис..." class="input" autofocus>
+        
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn btn-secondary text-sm" onclick="quickSearch('зустріч')">Зустрічі</button>
+          <button class="btn btn-secondary text-sm" onclick="quickSearch('концерт')">Концерти</button>
+          <button class="btn btn-secondary text-sm" onclick="quickSearch('майстер-клас')">Майстер-класи</button>
+          <button class="btn btn-secondary text-sm" onclick="quickSearch('спорт')">Спорт</button>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-3 pt-4">
+          <button onclick="performSearch()" class="btn btn-primary flex-1">
+            <i class="fas fa-search mr-2"></i>Знайти
+          </button>
+          <button onclick="closeModal('search-modal')" class="btn btn-secondary sm:w-auto">Скасувати</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Details Modal -->
+  <div id="event-details-modal" class="modal">
+    <div class="modal-content max-w-4xl">
+      <div id="event-details-content">
+        <!-- Event details will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div id="notification" class="notification"></div>
+
   <script>
-    let currentCategory = 'all';
+    // Data storage
+    let events = [];
+    let currentFilter = 'all';
+    let eventsPerPage = 6;
+    let currentPage = 1;
     
-    function toggleMobileMenu() {
-      document.getElementById('mobile-menu')?.classList.toggle('hidden');
-    }
-
-    function setActiveFilter(button, category) {
-      // Видаляємо активний клас з усіх кнопок
-      document.querySelectorAll('.filter-pill').forEach(pill => {
-        pill.classList.remove('active');
-      });
+    // Sample events data
+    const sampleEvents = [
+      {
+        id: 1,
+        title: 'Український вечір у центрі Валенсії',
+        type: 'cultural',
+        date: new Date('2025-08-02'),
+        time: '19:00',
+        location: 'Центр культури, Plaça de l\'Ajuntament',
+        description: 'Святкуємо українську культуру! Музика, танці, традиційна кухня. Приходьте всією сім\'єю! Буде концерт українських виконавців, майстер-класи з народних танців та дегустація національних страв.',
+        contact: '@ukrainian_evening',
+        organizer: 'Марія Петренко',
+        participants: 45,
+        maxParticipants: 100,
+        status: 'upcoming',
+        image: '🎭'
+      },
+      {
+        id: 2,
+        title: 'Зустріч підприємців',
+        type: 'business',
+        date: new Date('2025-07-31'),
+        time: '18:30',
+        location: 'Коворкінг Space, Carrer de Colón',
+        description: 'Щомісячна зустріч українських підприємців у Валенсії. Обговорюємо бізнес можливості, нетворкінг та обмін досвідом. Запрошені спікери розкажуть про особливості ведення бізнесу в Іспанії.',
+        contact: 'entrepreneurs@vlc.ua',
+        organizer: 'Андрій Коваленко',
+        participants: 23,
+        maxParticipants: 50,
+        status: 'today',
+        image: '💼'
+      },
+      {
+        id: 3,
+        title: 'Майстер-клас з української кухні',
+        type: 'cultural',
+        date: new Date('2025-08-05'),
+        time: '15:00',
+        location: 'Кулінарна студія, Carrer de Xàtiva',
+        description: 'Навчимося готувати традиційні українські страви: борщ, вареники та сирники. Досвідчений кухар покаже всі секрети приготування. Всі інгредієнти включені в вартість.',
+        contact: '+34 123 456 789',
+        organizer: 'Оксана Іваненко',
+        participants: 12,
+        maxParticipants: 15,
+        status: 'upcoming',
+        image: '👩‍🍳'
+      },
+      {
+        id: 4,
+        title: 'Футбольний турнір',
+        type: 'sports',
+        date: new Date('2025-08-08'),
+        time: '10:00',
+        location: 'Спортивний комплекс, Avinguda de França',
+        description: 'Товариський футбольний турнір серед українських команд. Реєстрація команд до 5 серпня. Призи для переможців та учасників. Після турніру - спільний обід.',
+        contact: '@football_vlc',
+        organizer: 'Денис Шевченко',
+        participants: 64,
+        maxParticipants: 80,
+        status: 'upcoming',
+        image: '⚽'
+      },
+      {
+        id: 5,
+        title: 'Курс іспанської мови',
+        type: 'educational',
+        date: new Date('2025-08-01'),
+        time: '17:00',
+        location: 'Бібліотека, Carrer de l\'Hospital',
+        description: 'Безкоштовний курс іспанської мови для початківців. Заняття проводяться двічі на тиждень. Маленькі групи до 10 осіб. Реєстрація обов\'язкова.',
+        contact: 'spanish@vlc.ua',
+        organizer: 'Ірина Морозова',
+        participants: 8,
+        maxParticipants: 10,
+        status: 'upcoming',
+        image: '📚'
+      },
+      {
+        id: 6,
+        title: 'Благодійний концерт',
+        type: 'charity',
+        date: new Date('2025-08-10'),
+        time: '20:00',
+        location: 'Палац мистецтв, Ciutat de les Arts',
+        description: 'Концерт на підтримку українських сімей. Виступлять місцеві та українські артисти. Всі кошти від продажу квитків будуть направлені на допомогу потребуючим.',
+        contact: 'charity@vlc.ua',
+        organizer: 'Благодійний фонд "Допомога"',
+        participants: 156,
+        maxParticipants: 200,
+        status: 'upcoming',
+        image: '🎵'
+      },
+      {
+        id: 7,
+        title: 'Пікнік у парку',
+        type: 'social',
+        date: new Date('2025-07-28'),
+        time: '12:00',
+        location: 'Jardines del Real',
+        description: 'Сімейний пікнік на природі. Ігри для дітей, м\'яч, гітара. Кожен приносить щось смачне для спільного столу. Чудова можливість познайомитися з новими людьми.',
+        contact: '@picnic_valencia',
+        organizer: 'Анна Сидоренко',
+        participants: 32,
+        maxParticipants: null,
+        status: 'past',
+        image: '🧺'
+      },
+      {
+        id: 8,
+        title: 'Лекція про історію України',
+        type: 'educational',
+        date: new Date('2025-08-12'),
+        time: '19:00',
+        location: 'Культурний центр, Carrer de la Pau',
+        description: 'Цікава лекція про маловідомі факти з історії України. Розповідь про культурну спадщину та традиції. Після лекції - обговорення за чашкою чаю.',
+        contact: 'history@vlc.ua',
+        organizer: 'Олександр Петров',
+        participants: 18,
+        maxParticipants: 40,
+        status: 'upcoming',
+        image: '📖'
+      }
+    ];
+    
+    // Initialize with sample data
+    events = [...sampleEvents];
+    
+    // Menu functions
+    function toggleMenu() {
+      const menu = document.getElementById('side-menu');
+      const overlay = document.getElementById('menu-overlay');
+      const hamburger = document.getElementById('hamburger');
       
-      // Додаємо активний клас до поточної кнопки
-      button.classList.add('active');
-      currentCategory = category;
+      menu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      hamburger.classList.toggle('active');
       
-      filterEvents();
-    }
-
-    function filterEvents() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const dateFilter = document.getElementById('dateFilter').value;
-      const priceFilter = document.getElementById('priceFilter').value;
-      const events = document.querySelectorAll('#eventsContainer .card');
-      let visibleCount = 0;
-
-      events.forEach(event => {
-        const category = event.dataset.category;
-        const eventDate = event.dataset.date;
-        const eventPrice = event.dataset.price;
-        const eventText = event.textContent.toLowerCase();
-
-        let showEvent = true;
-
-        // Фільтр категорії
-        if (currentCategory !== 'all' && category !== currentCategory) {
-          showEvent = false;
-        }
-
-        // Фільтр пошуку
-        if (searchTerm && !eventText.includes(searchTerm)) {
-          showEvent = false;
-        }
-
-        // Фільтр ціни
-        if (priceFilter !== 'all' && eventPrice !== priceFilter) {
-          showEvent = false;
-        }
-
-        // Фільтр дати (спрощена версія)
-        if (dateFilter !== 'all') {
-          const today = new Date();
-          const eventDateObj = new Date(eventDate);
-          
-          switch(dateFilter) {
-            case 'today':
-              if (eventDateObj.toDateString() !== today.toDateString()) {
-                showEvent = false;
-              }
-              break;
-            case 'tomorrow':
-              const tomorrow = new Date(today);
-              tomorrow.setDate(tomorrow.getDate() + 1);
-              if (eventDateObj.toDateString() !== tomorrow.toDateString()) {
-                showEvent = false;
-              }
-              break;
-            case 'week':
-              const weekFromNow = new Date(today);
-              weekFromNow.setDate(weekFromNow.getDate() + 7);
-              if (eventDateObj > weekFromNow || eventDateObj < today) {
-                showEvent = false;
-              }
-              break;
-            case 'month':
-              const monthFromNow = new Date(today);
-              monthFromNow.setMonth(monthFromNow.getMonth() + 1);
-              if (eventDateObj > monthFromNow || eventDateObj < today) {
-                showEvent = false;
-              }
-              break;
-          }
-        }
-
-        if (showEvent) {
-          event.style.display = 'block';
-          event.style.animation = 'fadeIn 0.5s ease-in';
-          visibleCount++;
-        } else {
-          event.style.display = 'none';
-        }
-      });
-
-      // Показуємо/ховаємо повідомлення про відсутність результатів
-      const noResults = document.getElementById('noResults');
-      if (visibleCount === 0) {
-        noResults.classList.remove('hidden');
+      if (menu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
       } else {
-        noResults.classList.add('hidden');
+        document.body.style.overflow = '';
       }
     }
-
-    function sortEvents() {
-      const container = document.getElementById('eventsContainer');
-      const events = Array.from(container.children).filter(child => child.classList.contains('card'));
-      const sortBy = document.getElementById('sortFilter').value;
-
-      events.sort((a, b) => {
-        switch(sortBy) {
-          case 'date':
-            return new Date(a.dataset.date) - new Date(b.dataset.date);
-          case 'alphabetical':
-            const titleA = a.querySelector('h3').textContent;
-            const titleB = b.querySelector('h3').textContent;
-            return titleA.localeCompare(titleB, 'uk');
-          case 'popular':
-            // Можна додати логіку сортування за популярністю
-            return Math.random() - 0.5; // Поки що рандомно
-          default:
-            return 0;
-        }
-      });
-
-      // Очищуємо контейнер і додаємо відсортовані елементи
-      container.innerHTML = '';
-      events.forEach(event => container.appendChild(event));
+    
+    // Utility functions
+    function showNotification(message, type = 'success') {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type} show`;
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 4000);
     }
-
-    // Додаємо CSS анімацію
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      
-      .card {
-        animation: fadeIn 0.5s ease-in;
-      }
-      
-      .floating-action a:hover {
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
-      }
-      
-      /* Покращена адаптивність */
-      @media (max-width: 768px) {
-        .filter-pill {
-          font-size: 14px;
-          padding: 6px 12px;
-        }
-        
-        .event-image {
-          height: 150px;
-        }
-        
-        .card h3 {
-          font-size: 18px;
-        }
-      }
-      
-      /* Плавні переходи для карток */
-      .card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      
-      .card:hover {
-        transform: translateY(-8px) scale(1.02);
-      }
-      
-      /* Ефект завантаження */
-      .loading {
-        position: relative;
-        pointer-events: none;
-      }
-      
-      .loading::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 1rem;
-      }
-      
-      .loading::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 20px;
-        height: 20px;
-        margin: -10px 0 0 -10px;
-        border: 2px solid #3b82f6;
-        border-top: 2px solid transparent;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        z-index: 1;
-      }
-      
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      
-      /* Покращені hover ефекти */
-      .category-badge {
-        transition: all 0.2s ease;
-      }
-      
-      .card:hover .category-badge {
-        transform: scale(1.1);
-      }
-      
-      /* Адаптивна сітка */
-      @media (max-width: 1024px) {
-        #eventsContainer {
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-      }
-      
-      @media (max-width: 640px) {
-        #eventsContainer {
-          grid-template-columns: 1fr;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Ініціалізація при завантаженні сторінки
-    document.addEventListener('DOMContentLoaded', function() {
-      // Додаємо обробники подій для клавіатури
-      document.getElementById('searchInput').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          filterEvents();
-        }
+    
+    function formatDate(date) {
+      return date.toLocaleDateString('uk-UA', { 
+        day: 'numeric', 
+        month: 'long',
+        year: 'numeric'
       });
-
-      // Додаємо ефект плавного з'явлення карток при завантаженні
-      const cards = document.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        setTimeout(() => {
-          card.style.transition = 'all 0.6s ease';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 100);
-      });
-
-      // Додаємо обробник для плаваючої кнопки
-      document.querySelector('.floating-action a').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    });
-
-    // Функція для імітації завантаження нових подій
-    function loadMoreEvents() {
-      const container = document.getElementById('eventsContainer');
-      const loadButton = document.querySelector('button:contains("Завантажити більше")');
+    }
+    
+    function formatTime(time) {
+      return time;
+    }
+    
+    function getEventStatus(event) {
+      const today = new Date();
+      const eventDate = new Date(event.date);
       
-      if (loadButton) {
-        loadButton.classList.add('loading');
-        loadButton.textContent = 'Завантаження...';
+      today.setHours(0, 0, 0, 0);
+      eventDate.setHours(0, 0, 0, 0);
+      
+      if (eventDate.getTime() === today.getTime()) {
+        return 'today';
+      } else if (eventDate < today) {
+        return 'past';
+      } else {
+        return 'upcoming';
+      }
+    }
+    
+    function getTypeIcon(type) {
+      const icons = {
+        social: '👥',
+        cultural: '🎭',
+        educational: '📚',
+        business: '💼',
+        sports: '⚽',
+        charity: '❤️'
+      };
+      return icons[type] || '📅';
+    }
+    
+    function getTypeName(type) {
+      const names = {
+        social: 'Соціальна',
+        cultural: 'Культурна',
+        educational: 'Освітня',
+        business: 'Бізнес',
+        sports: 'Спорт',
+        charity: 'Благодійність'
+      };
+      return names[type] || type;
+    }
+    
+    function getStatusText(status) {
+      const texts = {
+        upcoming: 'Скоро',
+        today: 'Сьогодні',
+        past: 'Минула'
+      };
+      return texts[status] || status;
+    }
+    
+    // Modal functions
+    function openSearch() {
+      document.getElementById('search-modal').classList.add('active');
+      setTimeout(() => {
+        document.getElementById('search-input').focus();
+      }, 100);
+    }
+    
+    function openAddEventModal() {
+      document.getElementById('add-event-modal').classList.add('active');
+      
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.querySelector('input[name="date"]').min = today;
+    }
+    
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+    
+    function quickSearch(term) {
+      document.getElementById('search-input').value = term;
+      performSearch();
+    }
+    
+    function performSearch() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+      
+      if (!searchTerm) {
+        showNotification('Введіть пошуковий запит', 'error');
+        return;
+      }
+      
+      const results = events.filter(event => 
+        event.title.toLowerCase().includes(searchTerm) ||
+        event.description.toLowerCase().includes(searchTerm) ||
+        event.location.toLowerCase().includes(searchTerm) ||
+        getTypeName(event.type).toLowerCase().includes(searchTerm)
+      );
+      
+      closeModal('search-modal');
+      document.getElementById('search-input').value = '';
+      
+      if (results.length > 0) {
+        renderEvents(results);
+        showNotification(`Знайдено ${results.length} подій для "${searchTerm}"`);
         
-        // Імітація завантаження
-        setTimeout(() => {
-          loadButton.classList.remove('loading');
-          loadButton.innerHTML = '<i class="fas fa-plus mr-2"></i>Завантажити більше подій';
+        // Reset filter
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.filter-btn').classList.add('active');
+        currentFilter = 'all';
+      } else {
+        showNotification(`Не знайдено подій для "${searchTerm}"`, 'error');
+        renderEvents([]);
+      }
+    }
+    
+    // Event submission
+    function submitEvent(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const newEvent = {
+        id: Date.now(),
+        title: formData.get('title'),
+        type: formData.get('type'),
+        date: new Date(formData.get('date')),
+        time: formData.get('time'),
+        location: formData.get('location'),
+        description: formData.get('description'),
+        contact: formData.get('contact'),
+        organizer: 'Ви',
+        participants: 0,
+        maxParticipants: formData.get('maxParticipants') ? parseInt(formData.get('maxParticipants')) : null,
+        status: 'upcoming',
+        image: getTypeIcon(formData.get('type'))
+      };
+      
+      events.unshift(newEvent);
+      closeModal('add-event-modal');
+      e.target.reset();
+      
+      showNotification('Подію додано успішно!');
+      
+      // Reset to show all events
+      currentFilter = 'all';
+      currentPage = 1;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.filter-btn').classList.add('active');
+      
+      renderEvents();
+      updateStats();
+      generateCalendar();
+      renderUpcomingEvents();
+    }
+    
+    // Filter functions
+    function filterEvents(filter, buttonElement) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      buttonElement.classList.add('active');
+      
+      currentFilter = filter;
+      currentPage = 1;
+      renderEvents();
+    }
+    
+    // Render functions
+    function renderEvents(customEvents = null) {
+      const container = document.getElementById('events-container');
+      const eventsToShow = customEvents || getFilteredEvents();
+      const paginatedEvents = eventsToShow.slice(0, currentPage * eventsPerPage);
+      
+      if (eventsToShow.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fas fa-calendar-times text-gray-400 text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Подій не знайдено</h3>
+            <p class="text-gray-500 mb-6">Поки що немає подій у цій категорії</p>
+            <button onclick="openAddEventModal()" class="btn btn-primary">
+              <i class="fas fa-plus mr-2"></i>Додати першу подію
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('load-more-btn').style.display = 'none';
+        return;
+      }
+      
+      container.innerHTML = paginatedEvents.map(event => {
+        const status = getEventStatus(event);
+        const participantsText = event.maxParticipants 
+          ? `${event.participants}/${event.maxParticipants}` 
+          : `${event.participants}`;
           
-          // Тут можна додати логіку завантаження нових подій з сервера
-        }, 2000);
+        return `
+          <div class="event-card" onclick="showEventDetails(${event.id})">
+            <div class="event-image">
+              <div class="relative z-10 text-6xl">${event.image}</div>
+              <div class="event-type-badge">${getTypeName(event.type)}</div>
+              <div class="event-date-badge">
+                <div class="text-xs font-medium text-gray-600">${formatDate(event.date).split(' ')[1]}</div>
+                <div class="text-lg font-bold text-gray-900">${formatDate(event.date).split(' ')[0]}</div>
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-3">
+                <span class="event-status status-${status}">
+                  ${getStatusText(status)}
+                </span>
+                <span class="text-sm text-gray-500">
+                  <i class="fas fa-clock mr-1"></i>${formatTime(event.time)}
+                </span>
+              </div>
+              
+              <h3 class="text-xl font-bold mb-3 leading-tight">${event.title}</h3>
+              
+              <div class="flex items-center text-gray-600 mb-3">
+                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                <span class="text-sm">${event.location}</span>
+              </div>
+              
+              <p class="text-gray-700 mb-4 leading-relaxed line-clamp-3">${event.description}</p>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="participants-avatars mr-3">
+                    ${generateAvatars(event.participants)}
+                  </div>
+                  <span class="text-sm text-gray-600">${participantsText} учасників</span>
+                </div>
+                
+                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                  Детальніше <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Update load more button
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      if (paginatedEvents.length >= eventsToShow.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'block';
       }
     }
-
-    // Lazy loading для покращення продуктивності
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.classList.remove('lazy');
-              imageObserver.unobserve(img);
-            }
-          }
-        });
-      });
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-      });
+    
+    function generateAvatars(count) {
+      const maxShow = 3;
+      const showCount = Math.min(count, maxShow);
+      let avatars = '';
+      
+      for (let i = 0; i < showCount; i++) {
+        const letter = String.fromCharCode(65 + i);
+        avatars += `<div class="avatar">${letter}</div>`;
+      }
+      
+      if (count > maxShow) {
+        avatars += `<div class="avatar">+${count - maxShow}</div>`;
+      }
+      
+      return avatars;
     }
-  </script>
-</body>
-</html>
+    
+    function getFilteredEvents() {
+      if (currentFilter === 'all') {
+        return events.sort((a, b) => new Date(a.date) - new Date(b.date));
+      }
+      
+      return events
+        .filter(event => event.type === currentFilter)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+    
+    function loadMoreEvents() {
+      currentPage++;
+      renderEvents();
+    }
+    
+    function showEventDetails(eventId) {
+      const event = events.find(e => e.id === eventId);
+      if (!event) return;
+      
+      const status = getEventStatus(event);
+      const participantsText = event.maxParticipants 
+        ? `${event.participants}/${event.maxParticipants}` 
+        : `${event.participants}`;
+      
+      document.getElementById('event-details-content').innerHTML = `
+        <div class="flex justify-between items-start mb-6">
+          <h2 class="text-2xl font-bold">${event.title}</h2>
+          <button onclick="closeModal('event-details-modal')" class="text-gray-500 hover:text-gray-700 p-2">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div class="md:col-span-2">
+            <div class="event-image mb-6 rounded-2xl">
+              <div class="relative z-10 text-8xl">${event.image}</div>
+            </div>
+            
+            <div class="space-y-4">
+              <div>
+                <h3 class="font-semibold mb-2">Опис події</h3>
+                <p class="text-gray-700 leading-relaxed">${event.description}</p>
+              </div>
+              
+              <div>
+                <h3 class="font-semibold mb-2">Організатор</h3>
+                <p class="text-gray-700">${event.organizer}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-2xl p-4">
+              <h3 class="font-semibold mb-3">Деталі</h3>
+              
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <i class="fas fa-calendar text-blue-600 w-5 mr-3"></i>
+                  <span>${formatDate(event.date)}</span>
+                </div>
+                
+                <div class="flex items-center">
+                  <i class="fas fa-clock text-green-600 w-5 mr-3"></i>
+                  <span>${formatTime(event.time)}</span>
+                </div>
+                
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-red-600 w-5 mr-3"></i>
+                  <span>${event.location}</span>
+                </div>
+                
+                <div class="flex items-center">
+                  <i class="fas fa-tag text-purple-600 w-5 mr-3"></i>
+                  <span>${getTypeName(event.type)}</span>
+                </div>
+                
+                <div class="flex items-center">
+                  <i class="fas fa-users text-orange-600 w-5 mr-3"></i>
+                  <span>${participantsText} учасників</span>
+                </div>
+                
+                <div class="flex items-center">
+                  <i class="fas fa-envelope text-gray-600 w-5 mr-3"></i>
+                  <span class="break-all">${event.contact}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-3">
+              ${status === 'upcoming' ? `
+                <button class="btn btn-primary w-full">
+                  <i class="fas fa-calendar-check mr-2"></i>Взяти участь
+                </button>
+              ` : ''}
+              
+              <button class="btn btn-secondary w-full">
+                <i class="fas fa-share mr-2"></i>Поділитися
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('event-details-modal').classList.add('active');
+    }
+    
+    function updateStats() {
+      const today = new Date();
+      const weekFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      
+      const thisWeekEvents = events.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate >= today && eventDate <= weekFromNow;
+      });
+      
+      const totalParticipants = events.reduce((sum, event) => sum + event.participants, 0);
+      const popularEvents = events.filter(event => event.participants > 20);
+      
+      document.getElementById('this-week-count').textContent = thisWeekEvents.length;
+      document.getElementById('participants-count').textContent = totalParticipants;
+      document.getElementById('popular-count').textContent = popularEvents.length;
+    }
+    
+    function generateCalendar() {
+      const calendar = document.getElementById('mini-calendar');
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currentYear = today.getFullYear();
+      
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      
+      const monthNames = [
+        'Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
+        'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'
+      ];
+      
+      let calendarHTML = `
+        <div class="text-center mb-4">
+          <h4 class="font-semibold">${monthNames[currentMonth]} ${currentYear}</h4>
+        </div>
+        
+        <div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-500 mb-2">
+          <div>Нд</div><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div>
+        </div>
+        
+        <div class="grid grid-cols-7 gap-1">
+      `;
+      
+      // Empty cells for days before month starts
+      for (let i = 0; i < firstDay; i++) {
+        calendarHTML += '<div></div>';
+      }
+      
+      // Days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const hasEvent = events.some(event => {
+          const eventDate = new Date(event.date);
+          return eventDate.toDateString() === date.toDateString();
+        });
+        
+        const isToday = date.toDateString() === today.toDateString();
+        const dayClass = hasEvent ? 'has-event' : (isToday ? 'bg-blue-100 text-blue-600' : '');
+        
+        calendarHTML += `
