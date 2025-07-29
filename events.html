@@ -15,16 +15,17 @@
       background: white;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
       position: relative;
       border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 24px;
     }
     
     .event-card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
     
     .event-card::before {
@@ -33,7 +34,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 6px;
+      height: 4px;
       background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
       background-size: 300% 100%;
       animation: gradient 8s ease infinite;
@@ -46,8 +47,7 @@
     
     .event-image {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: 180px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       align-items: center;
@@ -70,20 +70,21 @@
     
     .event-date-badge {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 12px;
+      right: 12px;
       background: rgba(255,255,255,0.95);
       backdrop-filter: blur(10px);
       border-radius: 12px;
       padding: 8px 12px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      min-width: 60px;
     }
     
     .event-type-badge {
       position: absolute;
-      top: 16px;
-      left: 16px;
+      top: 12px;
+      left: 12px;
       background: rgba(0,0,0,0.7);
       backdrop-filter: blur(10px);
       color: white;
@@ -98,8 +99,8 @@
     .event-status {
       display: inline-flex;
       align-items: center;
-      padding: 4px 8px;
-      border-radius: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
@@ -130,7 +131,6 @@
     .participants-avatars {
       display: flex;
       align-items: center;
-      margin-left: -8px;
     }
     
     .avatar {
@@ -149,6 +149,10 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
+    .avatar:first-child {
+      margin-left: 0;
+    }
+    
     .filter-btn {
       padding: 10px 20px;
       border-radius: 25px;
@@ -163,6 +167,7 @@
       align-items: center;
       gap: 8px;
       white-space: nowrap;
+      min-height: 44px;
     }
     
     .filter-btn:hover {
@@ -208,10 +213,11 @@
       background: white;
       border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       border: 1px solid rgba(255,255,255,0.2);
       position: sticky;
       top: 100px;
+      margin-bottom: 24px;
     }
     
     .calendar-day {
@@ -358,102 +364,6 @@
       box-shadow: 0 8px 32px rgba(239,68,68,0.3);
     }
     
-    /* Mobile styles */
-    @media (max-width: 768px) {
-      .event-card {
-        border-radius: 16px;
-        margin-bottom: 16px;
-      }
-      
-      .event-card:hover {
-        transform: translateY(-4px) scale(1.01);
-      }
-      
-      .event-image {
-        height: 160px;
-        font-size: 2rem;
-      }
-      
-      .event-date-badge {
-        top: 12px;
-        right: 12px;
-        padding: 6px 10px;
-        font-size: 12px;
-      }
-      
-      .event-type-badge {
-        top: 12px;
-        left: 12px;
-        padding: 4px 8px;
-        font-size: 10px;
-      }
-      
-      .filter-btn {
-        padding: 8px 16px;
-        font-size: 12px;
-        border-radius: 20px;
-      }
-      
-      .floating-add-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        font-size: 20px;
-      }
-      
-      .modal-content {
-        padding: 24px;
-        border-radius: 20px;
-        margin: 16px;
-      }
-      
-      .calendar-widget {
-        padding: 16px;
-        border-radius: 16px;
-      }
-      
-      .notification {
-        top: 16px;
-        right: 16px;
-        left: 16px;
-        max-width: none;
-        transform: translateY(-100px);
-        text-align: center;
-      }
-      
-      .notification.show {
-        transform: translateY(0);
-      }
-    }
-    
-    /* Tablet styles */
-    @media (max-width: 1024px) and (min-width: 768px) {
-      .event-card {
-        margin-bottom: 20px;
-      }
-      
-      .calendar-widget {
-        position: static;
-        margin-bottom: 24px;
-      }
-    }
-    
-    /* Touch improvements */
-    @media (hover: none) and (pointer: coarse) {
-      .event-card:hover {
-        transform: none;
-      }
-      
-      .filter-btn:hover {
-        transform: none;
-      }
-      
-      .floating-add-btn:hover {
-        transform: scale(1.05);
-      }
-    }
-    
     /* Hamburger Menu Styles */
     .hamburger {
       display: flex;
@@ -500,13 +410,6 @@
       transition: left 0.3s ease;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       overflow-y: auto;
-    }
-    
-    @media (max-width: 480px) {
-      .side-menu {
-        width: 100vw;
-        left: -100vw;
-      }
     }
     
     .side-menu.active {
@@ -566,26 +469,8 @@
       width: auto;
     }
     
-    @media (max-width: 768px) {
-      .logo {
-        max-height: 36px;
-      }
-      
-      .menu-item {
-        padding: 24px;
-        font-size: 18px;
-        min-height: 64px;
-      }
-    }
-    
     .header-container {
       height: 64px;
-    }
-    
-    @media (max-width: 768px) {
-      .header-container {
-        height: 56px;
-      }
     }
     
     .filters-scroll {
@@ -593,10 +478,137 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      padding-bottom: 4px;
     }
     
     .filters-scroll::-webkit-scrollbar {
       display: none;
+    }
+    
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .event-card {
+        border-radius: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .event-card:hover {
+        transform: translateY(-4px);
+      }
+      
+      .event-image {
+        height: 140px;
+        font-size: 2.5rem;
+      }
+      
+      .event-date-badge {
+        top: 10px;
+        right: 10px;
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .event-type-badge {
+        top: 10px;
+        left: 10px;
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      .filter-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+        border-radius: 20px;
+        min-height: 40px;
+      }
+      
+      .floating-add-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        font-size: 20px;
+      }
+      
+      .modal-content {
+        padding: 24px;
+        border-radius: 20px;
+        margin: 16px;
+        max-height: 85vh;
+      }
+      
+      .calendar-widget {
+        padding: 16px;
+        border-radius: 16px;
+        position: static;
+        margin-bottom: 20px;
+      }
+      
+      .notification {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        transform: translateY(-100px);
+        text-align: center;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+      }
+      
+      .side-menu {
+        width: 280px;
+        left: -280px;
+      }
+      
+      .logo {
+        max-height: 36px;
+      }
+      
+      .header-container {
+        height: 56px;
+      }
+      
+      .menu-item {
+        padding: 18px 20px;
+        font-size: 16px;
+        min-height: 52px;
+      }
+    }
+    
+    /* Very small screens */
+    @media (max-width: 480px) {
+      .side-menu {
+        width: 100vw;
+        left: -100vw;
+      }
+      
+      .event-image {
+        height: 120px;
+        font-size: 2rem;
+      }
+      
+      .menu-item {
+        padding: 20px 24px;
+        font-size: 18px;
+        min-height: 60px;
+      }
+    }
+    
+    /* Touch improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .event-card:hover {
+        transform: none;
+      }
+      
+      .filter-btn:hover {
+        transform: none;
+      }
+      
+      .floating-add-btn:hover {
+        transform: scale(1.05);
+      }
     }
   </style>
 </head>
@@ -790,7 +802,7 @@
       <!-- Sidebar -->
       <div class="lg:col-span-1">
         <!-- Mini Calendar -->
-        <div class="calendar-widget mb-6" id="calendar-section">
+        <div class="calendar-widget" id="calendar-section">
           <h3 class="text-lg font-semibold mb-4 flex items-center">
             <i class="fas fa-calendar-alt mr-2 text-purple-600"></i>
             Календар подій
@@ -1047,36 +1059,6 @@
         maxParticipants: 200,
         status: 'upcoming',
         image: '🎵'
-      },
-      {
-        id: 7,
-        title: 'Пікнік у парку',
-        type: 'social',
-        date: new Date('2025-07-28'),
-        time: '12:00',
-        location: 'Jardines del Real',
-        description: 'Сімейний пікнік на природі. Ігри для дітей, м\'яч, гітара. Кожен приносить щось смачне для спільного столу. Чудова можливість познайомитися з новими людьми.',
-        contact: '@picnic_valencia',
-        organizer: 'Анна Сидоренко',
-        participants: 32,
-        maxParticipants: null,
-        status: 'past',
-        image: '🧺'
-      },
-      {
-        id: 8,
-        title: 'Лекція про історію України',
-        type: 'educational',
-        date: new Date('2025-08-12'),
-        time: '19:00',
-        location: 'Культурний центр, Carrer de la Pau',
-        description: 'Цікава лекція про маловідомі факти з історії України. Розповідь про культурну спадщину та традиції. Після лекції - обговорення за чашкою чаю.',
-        contact: 'history@vlc.ua',
-        organizer: 'Олександр Петров',
-        participants: 18,
-        maxParticipants: 40,
-        status: 'upcoming',
-        image: '📖'
       }
     ];
     
@@ -1546,4 +1528,128 @@
         const isToday = date.toDateString() === today.toDateString();
         const dayClass = hasEvent ? 'has-event' : (isToday ? 'bg-blue-100 text-blue-600' : '');
         
-        calendarHTML += `
+        calendarHTML += `<div class="calendar-day ${dayClass}">${day}</div>`;
+      }
+      
+      calendarHTML += '</div>';
+      calendar.innerHTML = calendarHTML;
+    }
+    
+    function renderUpcomingEvents() {
+      const container = document.getElementById('upcoming-events');
+      const upcoming = events
+        .filter(event => getEventStatus(event) === 'upcoming')
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 3);
+      
+      if (upcoming.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-sm">Немає найближчих подій</p>';
+        return;
+      }
+      
+      container.innerHTML = upcoming.map(event => `
+        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer" onclick="showEventDetails(${event.id})">
+          <div class="text-2xl mr-3">${event.image}</div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-medium text-sm truncate">${event.title}</h4>
+            <p class="text-xs text-gray-500">${formatDate(event.date)} о ${formatTime(event.time)}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function scrollToCalendar() {
+      document.getElementById('calendar-section').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+    
+    // Close modal on outside click
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+      }
+    });
+    
+    // Close modal and menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(modal => {
+          modal.classList.remove('active');
+        });
+        
+        const menu = document.getElementById('side-menu');
+        if (menu.classList.contains('active')) {
+          toggleMenu();
+        }
+      }
+    });
+    
+    // Handle search on Enter key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.id === 'search-input') {
+        performSearch();
+      }
+    });
+    
+    // Prevent zoom on double tap for iOS
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+    
+    // Handle orientation change
+    window.addEventListener('orientationchange', function() {
+      setTimeout(() => {
+        window.scrollTo(window.scrollX, window.scrollY);
+      }, 100);
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderEvents();
+      updateStats();
+      generateCalendar();
+      renderUpcomingEvents();
+      
+      // Simulate participant updates
+      setInterval(() => {
+        events.forEach(event => {
+          if (Math.random() < 0.1 && getEventStatus(event) === 'upcoming') {
+            event.participants += Math.floor(Math.random() * 3) + 1;
+            if (event.maxParticipants && event.participants > event.maxParticipants) {
+              event.participants = event.maxParticipants;
+            }
+          }
+        });
+        
+        // Update display if we're showing events
+        const container = document.getElementById('events-container');
+        if (container.children.length > 0 && !container.querySelector('.text-center')) {
+          updateStats();
+          renderUpcomingEvents();
+          
+          // Update participant counts in visible cards
+          const participantElements = container.querySelectorAll('.text-sm.text-gray-600');
+          participantElements.forEach((elem, index) => {
+            if (elem.textContent.includes('учасників')) {
+              const visibleEvents = getFilteredEvents().slice(0, currentPage * eventsPerPage);
+              if (visibleEvents[index]) {
+                const event = visibleEvents[index];
+                const participantsText = event.maxParticipants 
+                  ? `${event.participants}/${event.maxParticipants}` 
+                  : `${event.participants}`;
+                elem.textContent = `${participantsText} учасників`;
+              }
+            }
+          });
+        }
+      }, 30000);
+    });
+  </script>
+</body>
+</html>
