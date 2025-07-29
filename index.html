@@ -25,6 +25,14 @@
       box-shadow: 0 12px 32px rgba(0,0,0,0.15);
     }
     
+    /* Mobile responsive cards */
+    @media (max-width: 768px) {
+      .card {
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+    }
+    
     .btn {
       padding: 12px 24px;
       border-radius: 8px;
@@ -35,6 +43,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-height: 44px; /* Better touch targets */
+    }
+    
+    /* Mobile button adjustments */
+    @media (max-width: 768px) {
+      .btn {
+        padding: 14px 20px;
+        font-size: 16px;
+        min-height: 48px;
+      }
     }
     
     .btn-primary {
@@ -72,15 +90,27 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 25px rgba(255,107,53,0.4);
     }
+
+    /* Mobile CTA button */
+    @media (max-width: 768px) {
+      .btn-cta {
+        font-size: 16px;
+        padding: 16px 24px;
+      }
+    }
     
     /* Hamburger Menu Styles */
     .hamburger {
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      padding: 8px;
+      padding: 12px;
       z-index: 1001;
       position: relative;
+      min-height: 44px;
+      min-width: 44px;
+      align-items: center;
+      justify-content: center;
     }
     
     .hamburger span {
@@ -107,14 +137,30 @@
     .side-menu {
       position: fixed;
       top: 0;
-      left: -300px;
-      width: 300px;
+      left: -320px;
+      width: 320px;
       height: 100vh;
       background: white;
       z-index: 1000;
       transition: left 0.3s ease;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       overflow-y: auto;
+    }
+
+    /* Tablet menu width */
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .side-menu {
+        width: 350px;
+        left: -350px;
+      }
+    }
+
+    /* Mobile menu full width on small screens */
+    @media (max-width: 480px) {
+      .side-menu {
+        width: 100vw;
+        left: -100vw;
+      }
     }
     
     .side-menu.active {
@@ -142,11 +188,22 @@
     .menu-item {
       display: flex;
       align-items: center;
-      padding: 16px 24px;
+      padding: 20px 24px;
       color: #333;
       text-decoration: none;
       transition: all 0.2s;
       border-left: 4px solid transparent;
+      min-height: 56px;
+      font-size: 16px;
+    }
+
+    /* Mobile menu items */
+    @media (max-width: 768px) {
+      .menu-item {
+        padding: 24px;
+        font-size: 18px;
+        min-height: 64px;
+      }
     }
     
     .menu-item:hover {
@@ -156,8 +213,9 @@
     }
     
     .menu-item i {
-      margin-right: 12px;
-      width: 20px;
+      margin-right: 16px;
+      width: 24px;
+      font-size: 18px;
     }
     
     .modal {
@@ -188,14 +246,25 @@
       overflow-y: auto;
       box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     }
+
+    /* Mobile modal adjustments */
+    @media (max-width: 768px) {
+      .modal-content {
+        padding: 24px;
+        margin: 16px;
+        max-height: 85vh;
+        border-radius: 16px;
+      }
+    }
     
     .input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 16px;
       border: 1px solid #dee2e6;
       border-radius: 8px;
       font-size: 16px;
       transition: border-color 0.2s;
+      min-height: 48px;
     }
     
     .input:focus {
@@ -203,15 +272,30 @@
       border-color: #007bff;
       box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
     }
+
+    /* Textarea specific styling */
+    textarea.input {
+      min-height: 120px;
+      resize: vertical;
+    }
     
     .item {
       background: white;
-      border-radius: 8px;
-      padding: 20px;
+      border-radius: 12px;
+      padding: 24px;
       margin-bottom: 16px;
       border-left: 4px solid #007bff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       transition: all 0.2s;
+    }
+
+    /* Mobile item styling */
+    @media (max-width: 768px) {
+      .item {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+      }
     }
 
     .item:hover {
@@ -231,6 +315,23 @@
       transform: translateX(400px);
       transition: transform 0.3s;
       box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+      max-width: 320px;
+    }
+
+    /* Mobile notification */
+    @media (max-width: 768px) {
+      .notification {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        transform: translateY(-100px);
+        text-align: center;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+      }
     }
     
     .notification.show {
@@ -243,13 +344,47 @@
     }
     
     .tab {
-      padding: 12px 24px;
+      padding: 12px 20px;
       background: #f8f9fa;
       border: none;
       cursor: pointer;
       border-radius: 8px 8px 0 0;
       margin-right: 4px;
       transition: all 0.2s;
+      font-size: 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Mobile tabs */
+    @media (max-width: 768px) {
+      .tab {
+        flex: 1;
+        padding: 16px 8px;
+        font-size: 13px;
+        margin-right: 2px;
+        border-radius: 6px 6px 0 0;
+      }
+    }
+
+    /* Very small screens - stack tabs */
+    @media (max-width: 480px) {
+      .tabs-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .tabs-wrapper {
+        display: flex;
+        min-width: 500px;
+      }
+      
+      .tab {
+        white-space: nowrap;
+        min-width: 80px;
+      }
     }
     
     .tab.active {
@@ -266,6 +401,15 @@
       margin-bottom: 32px;
       position: relative;
       overflow: hidden;
+    }
+
+    /* Mobile news card */
+    @media (max-width: 768px) {
+      .news-card {
+        padding: 24px;
+        margin-bottom: 24px;
+        border-radius: 20px;
+      }
     }
 
     .news-card::before {
@@ -287,6 +431,15 @@
       position: relative;
       overflow: hidden;
       margin: 48px 0;
+    }
+
+    /* Mobile CTA section */
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 32px 20px;
+        margin: 32px 0;
+        border-radius: 24px;
+      }
     }
 
     .cta-section::before {
@@ -311,6 +464,13 @@
       width: auto;
     }
 
+    /* Mobile logo */
+    @media (max-width: 768px) {
+      .logo {
+        max-height: 36px;
+      }
+    }
+
     .footer-gradient {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
@@ -322,6 +482,128 @@
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    /* Hero section responsive */
+    .hero-title {
+      font-size: 3rem;
+      line-height: 1.1;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+    }
+
+    /* Category grid responsive */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Header responsive */
+    .header-container {
+      height: 64px;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        height: 56px;
+      }
+    }
+
+    /* Action buttons responsive */
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .action-buttons {
+        gap: 0.5rem;
+      }
+      
+      .action-buttons .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      
+      .action-buttons .btn span {
+        display: none;
+      }
+    }
+
+    /* Touch improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .card:hover {
+        transform: none;
+      }
+      
+      .btn-primary:hover {
+        transform: none;
+      }
+      
+      .item:hover {
+        transform: none;
+      }
+    }
+
+    /* Safe area adjustments for mobile devices */
+    @supports (padding: max(0px)) {
+      .header-container {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+      }
+      
+      .side-menu {
+        padding-left: max(0px, env(safe-area-inset-left));
+      }
+    }
+
+    /* Scrollbar styling for webkit */
+    .side-menu::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .side-menu::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    .side-menu::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
     }
   </style>
 </head>
@@ -343,7 +625,7 @@
         <i class="fas fa-home"></i>
         Головна
       </a>
-      <a href="#" class="menu-item">
+      <a href="events.html" class="menu-item">
         <i class="fas fa-calendar"></i>
         Події
       </a>
@@ -387,7 +669,7 @@
   <!-- Header -->
   <header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex justify-between items-center h-16">
+      <div class="header-container flex justify-between items-center">
         <!-- Hamburger Menu -->
         <div class="hamburger" id="hamburger" onclick="toggleMenu()">
           <span></span>
@@ -402,12 +684,12 @@
         </div>
         
         <!-- Action Buttons -->
-        <div class="flex items-center space-x-4">
-          <button onclick="openSearch()" class="text-gray-600 hover:text-blue-600 text-lg transition-colors">
+        <div class="action-buttons">
+          <button onclick="openSearch()" class="text-gray-600 hover:text-blue-600 text-lg transition-colors p-2">
             <i class="fas fa-search"></i>
           </button>
           <button onclick="openAddModal()" class="btn btn-primary">
-            <i class="fas fa-plus mr-2"></i>Додати
+            <i class="fas fa-plus mr-2"></i><span>Додати</span>
           </button>
         </div>
       </div>
@@ -415,18 +697,18 @@
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
+  <main class="max-w-6xl mx-auto px-4 py-6 md:py-8">
     
     <!-- Hero -->
-    <section class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">
+    <section class="text-center mb-8 md:mb-12">
+      <h2 class="hero-title font-bold text-gray-900 mb-4">
         Тут і зараз
       </h2>
-      <p class="text-xl text-gray-600 mb-8">
+      <p class="hero-subtitle text-gray-600 mb-6 md:mb-8 px-4">
         Знайдіть житло, роботу, друзів та все необхідне для життя в Іспанії
       </p>
       
-      <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto px-4">
         <button onclick="openSearch()" class="btn btn-primary flex-1">
           <i class="fas fa-search mr-2"></i>Пошук
         </button>
@@ -437,25 +719,25 @@
     </section>
 
     <!-- News Section -->
-    <section class="mb-12">
+    <section class="mb-8 md:mb-12">
       <div class="news-card">
         <div class="relative z-10">
-          <div class="flex items-center mb-4">
-            <span class="bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+            <span class="bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm font-medium inline-flex items-center w-fit">
               <i class="fas fa-bullhorn mr-2"></i>Актуально
             </span>
-            <span class="ml-auto text-white text-sm opacity-80">29 липня 2025</span>
+            <span class="text-white text-sm opacity-80">29 липня 2025</span>
           </div>
-          <h3 class="text-2xl font-bold mb-3">Нові можливості для українців в Валенсії</h3>
-          <p class="text-lg opacity-90 mb-4">
+          <h3 class="text-xl md:text-2xl font-bold mb-3">Нові можливості для українців в Валенсії</h3>
+          <p class="text-base md:text-lg opacity-90 mb-4 leading-relaxed">
             Міська рада Валенсії запускає нову програму підтримки українських біженців. 
             Безкоштовні курси іспанської мови, допомога з працевлаштуванням та житлом.
           </p>
-          <div class="flex items-center">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <button class="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
               Детальніше
             </button>
-            <span class="ml-4 text-white text-sm opacity-75">
+            <span class="text-white text-sm opacity-75">
               <i class="fas fa-eye mr-1"></i>1,234 переглядів
             </span>
           </div>
@@ -464,8 +746,8 @@
     </section>
 
     <!-- Categories -->
-    <section class="mb-12">
-      <div class="grid md:grid-cols-4 gap-6">
+    <section class="mb-8 md:mb-12">
+      <div class="category-grid">
         
         <div class="card" onclick="showCategory('events')">
           <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
@@ -507,11 +789,11 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-center text-white mb-12">
-      <h2 class="text-3xl font-bold mb-4">
+    <section class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 md:p-8 text-center text-white mb-8 md:mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
         Створюймо спільноту разом! 🇺🇦
       </h2>
-      <p class="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
+      <p class="text-base md:text-lg mb-6 opacity-90 max-w-2xl mx-auto leading-relaxed">
         Долучайтеся до найактивнішої української спільноти в Валенсії. 
         Діліться досвідом, знаходьте друзів, створюйте нові можливості!
       </p>
@@ -527,15 +809,17 @@
 
     <!-- Content Area -->
     <section>
-      <div class="bg-white rounded-12 p-6 shadow-sm">
+      <div class="bg-white rounded-xl p-4 md:p-6 shadow-sm">
         <!-- Tabs -->
         <div class="border-b border-gray-200 mb-6">
-          <div class="flex">
-            <button class="tab active" onclick="switchTab('all', this)">Всі</button>
-            <button class="tab" onclick="switchTab('events', this)">Події</button>
-            <button class="tab" onclick="switchTab('business', this)">Бізнес</button>
-            <button class="tab" onclick="switchTab('housing', this)">Житло</button>
-            <button class="tab" onclick="switchTab('jobs', this)">Робота</button>
+          <div class="tabs-container">
+            <div class="tabs-wrapper flex">
+              <button class="tab active" onclick="switchTab('all', this)">Всі</button>
+              <button class="tab" onclick="switchTab('events', this)">Події</button>
+              <button class="tab" onclick="switchTab('business', this)">Бізнес</button>
+              <button class="tab" onclick="switchTab('housing', this)">Житло</button>
+              <button class="tab" onclick="switchTab('jobs', this)">Робота</button>
+            </div>
           </div>
         </div>
         
@@ -552,69 +836,69 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer-gradient mt-16 py-12 text-white">
+  <footer class="footer-gradient mt-12 md:mt-16 py-8 md:py-12 text-white">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="grid md:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         
         <!-- About -->
-        <div>
+        <div class="col-span-1 md:col-span-2 lg:col-span-1">
           <div class="flex items-center mb-4">
             <img src="logo.png" alt="VLC.UA Logo" class="h-8 w-auto mr-3" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
             <h3 class="text-xl font-bold" style="display:none;">VLC.UA</h3>
           </div>
-          <p class="text-white text-opacity-80 mb-4">
+          <p class="text-white text-opacity-80 mb-6 leading-relaxed">
             Найбільша українська спільнота в Валенсії. Допомагаємо адаптуватися, 
             знаходити житло, роботу та нових друзів.
           </p>
           <div class="flex space-x-4">
-            <a href="#" class="text-white hover:text-yellow-300 transition-colors">
-              <i class="fab fa-telegram text-xl"></i>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-telegram text-2xl"></i>
             </a>
-            <a href="#" class="text-white hover:text-yellow-300 transition-colors">
-              <i class="fab fa-instagram text-xl"></i>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-instagram text-2xl"></i>
             </a>
-            <a href="#" class="text-white hover:text-yellow-300 transition-colors">
-              <i class="fab fa-facebook text-xl"></i>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-facebook text-2xl"></i>
             </a>
           </div>
         </div>
         
         <!-- Quick Links -->
         <div>
-          <h4 class="font-semibold mb-4">Швидкі посилання</h4>
-          <ul class="space-y-2 text-white text-opacity-80">
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Події</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Бізнес-каталог</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Пошук житла</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Вакансії</a></li>
+          <h4 class="font-semibold mb-4 text-lg">Швидкі посилання</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="events.html" class="hover:text-yellow-300 transition-colors block py-1">Події</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Бізнес-каталог</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Пошук житла</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Вакансії</a></li>
           </ul>
         </div>
         
         <!-- Help -->
         <div>
-          <h4 class="font-semibold mb-4">Допомога</h4>
-          <ul class="space-y-2 text-white text-opacity-80">
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Як подати оголошення</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Правила спільноти</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Корисні документи</a></li>
-            <li><a href="#" class="hover:text-yellow-300 transition-colors">Контакти</a></li>
+          <h4 class="font-semibold mb-4 text-lg">Допомога</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Як подати оголошення</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Правила спільноти</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Корисні документи</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Контакти</a></li>
           </ul>
         </div>
         
         <!-- Contact -->
         <div>
-          <h4 class="font-semibold mb-4">Зв'язок з нами</h4>
-          <div class="space-y-3 text-white text-opacity-80">
+          <h4 class="font-semibold mb-4 text-lg">Зв'язок з нами</h4>
+          <div class="space-y-4 text-white text-opacity-80">
             <div class="flex items-center">
-              <i class="fas fa-envelope mr-3"></i>
+              <i class="fas fa-envelope mr-3 w-5"></i>
               <a href="mailto:info@vlc.ua" class="hover:text-yellow-300 transition-colors">info@vlc.ua</a>
             </div>
             <div class="flex items-center">
-              <i class="fab fa-telegram mr-3"></i>
+              <i class="fab fa-telegram mr-3 w-5"></i>
               <a href="https://t.me/vlc_valencia" class="hover:text-yellow-300 transition-colors">@vlc_valencia</a>
             </div>
             <div class="flex items-center">
-              <i class="fas fa-map-marker-alt mr-3"></i>
+              <i class="fas fa-map-marker-alt mr-3 w-5"></i>
               <span>Валенсія, Іспанія</span>
             </div>
           </div>
@@ -622,8 +906,8 @@
         
       </div>
       
-      <div class="border-t border-white border-opacity-20 mt-8 pt-8 text-center">
-        <p class="text-white text-opacity-60">
+      <div class="border-t border-white border-opacity-20 mt-8 pt-6 md:pt-8 text-center">
+        <p class="text-white text-opacity-60 text-sm md:text-base">
           © 2025 VLC.UA - Українці в Валенсії. Створено з ❤️ для нашої спільноти
         </p>
       </div>
@@ -635,26 +919,26 @@
     <div class="modal-content">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-xl font-semibold">Пошук</h3>
-        <button onclick="closeModal('search-modal')" class="text-gray-500 hover:text-gray-700">
-          <i class="fas fa-times"></i>
+        <button onclick="closeModal('search-modal')" class="text-gray-500 hover:text-gray-700 p-2">
+          <i class="fas fa-times text-lg"></i>
         </button>
       </div>
       
       <div class="space-y-4">
         <input type="text" id="search-input" placeholder="Що шукаєте?" class="input" autofocus>
         
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-3">
           <button class="btn btn-secondary text-sm" onclick="quickSearch('житло')">Житло</button>
           <button class="btn btn-secondary text-sm" onclick="quickSearch('робота')">Робота</button>
           <button class="btn btn-secondary text-sm" onclick="quickSearch('зустрічі')">Зустрічі</button>
           <button class="btn btn-secondary text-sm" onclick="quickSearch('послуги')">Послуги</button>
         </div>
         
-        <div class="flex gap-3 pt-4">
+        <div class="flex flex-col sm:flex-row gap-3 pt-4">
           <button onclick="performSearch()" class="btn btn-primary flex-1">
             <i class="fas fa-search mr-2"></i>Знайти
           </button>
-          <button onclick="closeModal('search-modal')" class="btn btn-secondary">Скасувати</button>
+          <button onclick="closeModal('search-modal')" class="btn btn-secondary sm:w-auto">Скасувати</button>
         </div>
       </div>
     </div>
@@ -665,8 +949,8 @@
     <div class="modal-content">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-xl font-semibold">Додати оголошення</h3>
-        <button onclick="closeModal('add-modal')" class="text-gray-500 hover:text-gray-700">
-          <i class="fas fa-times"></i>
+        <button onclick="closeModal('add-modal')" class="text-gray-500 hover:text-gray-700 p-2">
+          <i class="fas fa-times text-lg"></i>
         </button>
       </div>
       
@@ -698,18 +982,18 @@
             <input type="text" name="contact" class="input" placeholder="Телефон, email або Telegram" required>
           </div>
           
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" id="terms" required>
-            <label for="terms" class="text-sm text-gray-600">
-              Погоджуюся з правилами спільноти
+          <div class="flex items-start space-x-3">
+            <input type="checkbox" id="terms" required class="mt-1">
+            <label for="terms" class="text-sm text-gray-600 leading-relaxed">
+              Погоджуюся з правилами спільноти та підтверджую достовірність інформації
             </label>
           </div>
           
-          <div class="flex gap-3 pt-4">
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
             <button type="submit" class="btn btn-primary flex-1">
               <i class="fas fa-paper-plane mr-2"></i>Додати
             </button>
-            <button type="button" onclick="closeModal('add-modal')" class="btn btn-secondary">
+            <button type="button" onclick="closeModal('add-modal')" class="btn btn-secondary sm:w-auto">
               Скасувати
             </button>
           </div>
@@ -732,7 +1016,7 @@
         id: 1,
         category: 'housing',
         title: 'Квартира в центрі Валенсії',
-        description: '2-кімнатна квартира, 60м², біля метро Colón. Є все необхідне для проживання.',
+        description: '2-кімнатна квартира, 60м², біля метро Colón. Є все необхідне для проживання. Сучасний ремонт, кондиціонер, Wi-Fi.',
         contact: '+34 123 456 789',
         date: new Date('2025-01-28'),
         views: 45
@@ -741,7 +1025,7 @@
         id: 2,
         category: 'jobs',
         title: 'Шукаю роботу в ресторані',
-        description: 'Досвід роботи офіціантом 3 роки. Володію іспанською та англійською.',
+        description: 'Досвід роботи офіціантом 3 роки. Володію іспанською та англійською. Готовий працювати в вечірні зміни.',
         contact: '@maria_valencia',
         date: new Date('2025-01-27'),
         views: 23
@@ -750,7 +1034,7 @@
         id: 3,
         category: 'events',
         title: 'Зустріч підприємців',
-        description: 'Щомісячна зустріч українських підприємців у Валенсії. Обговорюємо бізнес та можливості.',
+        description: 'Щомісячна зустріч українських підприємців у Валенсії. Обговорюємо бізнес та можливості. Нетворкінг та обмін досвідом.',
         contact: 'entrepreneurs@vlc.ua',
         date: new Date('2025-01-29'),
         views: 67
@@ -759,7 +1043,7 @@
         id: 4,
         category: 'business',
         title: 'Доставка українських продуктів',
-        description: 'Доставляємо українські продукти по всій Валенсії. Гречка, сало, консерви та багато іншого.',
+        description: 'Доставляємо українські продукти по всій Валенсії. Гречка, сало, консерви та багато іншого. Замовлення від 25€.',
         contact: '+34 987 654 321',
         date: new Date('2025-01-26'),
         views: 89
@@ -768,7 +1052,7 @@
         id: 5,
         category: 'housing',
         title: 'Здам кімнату',
-        description: 'Здаю кімнату в квартирі, район Ruzafa. Для дівчини, без тварин.',
+        description: 'Здаю кімнату в квартирі, район Ruzafa. Для дівчини, без тварин. Включені комунальні послуги.',
         contact: 'anna.vlc@gmail.com',
         date: new Date('2025-01-25'),
         views: 34
@@ -777,10 +1061,28 @@
         id: 6,
         category: 'events',
         title: 'Український вечір',
-        description: 'Святкуємо українську культуру! Музика, танці, традиційна кухня.',
+        description: 'Святкуємо українську культуру! Музика, танці, традиційна кухня. Приходьте всією сім\'єю!',
         contact: '@ukrainian_evening',
         date: new Date('2025-01-30'),
         views: 123
+      },
+      {
+        id: 7,
+        category: 'jobs',
+        title: 'Потрібен кур\'єр',
+        description: 'Шукаємо кур\'єра на власному транспорті. Гнучкий графік, гарна оплата. Знання міста буде плюсом.',
+        contact: 'delivery.vlc@gmail.com',
+        date: new Date('2025-01-24'),
+        views: 56
+      },
+      {
+        id: 8,
+        category: 'business',
+        title: 'Перекладацькі послуги',
+        description: 'Професійні переклади з/на українську, іспанську, англійську. Документи, контракти, сертифікати.',
+        contact: '+34 555 123 456',
+        date: new Date('2025-01-23'),
+        views: 78
       }
     ];
     
@@ -796,6 +1098,13 @@
       menu.classList.toggle('active');
       overlay.classList.toggle('active');
       hamburger.classList.toggle('active');
+      
+      // Prevent body scroll when menu is open
+      if (menu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
     }
     
     // Utility functions
@@ -806,7 +1115,7 @@
       
       setTimeout(() => {
         notification.classList.remove('show');
-      }, 3000);
+      }, 4000);
     }
     
     function formatDate(date) {
@@ -817,6 +1126,7 @@
       if (days === 0) return 'Сьогодні';
       if (days === 1) return 'Вчора';
       if (days < 7) return `${days} днів тому`;
+      if (days < 30) return `${Math.floor(days / 7)} тижнів тому`;
       
       return date.toLocaleDateString('uk-UA', { 
         day: 'numeric', 
@@ -844,10 +1154,22 @@
       return colors[category] || 'gray';
     }
     
+    function getCategoryName(category) {
+      const names = {
+        events: 'Подія',
+        business: 'Бізнес',
+        housing: 'Житло',
+        jobs: 'Робота'
+      };
+      return names[category] || category;
+    }
+    
     // Modal functions
     function openSearch() {
       document.getElementById('search-modal').classList.add('active');
-      document.getElementById('search-input').focus();
+      setTimeout(() => {
+        document.getElementById('search-input').focus();
+      }, 100);
     }
     
     function openAddModal() {
@@ -864,7 +1186,7 @@
     }
     
     function performSearch() {
-      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
       
       if (!searchTerm) {
         showNotification('Введіть пошуковий запит', 'error');
@@ -873,7 +1195,8 @@
       
       const results = items.filter(item => 
         item.title.toLowerCase().includes(searchTerm) ||
-        item.description.toLowerCase().includes(searchTerm)
+        item.description.toLowerCase().includes(searchTerm) ||
+        getCategoryName(item.category).toLowerCase().includes(searchTerm)
       );
       
       closeModal('search-modal');
@@ -882,6 +1205,11 @@
       if (results.length > 0) {
         renderItems(results);
         showNotification(`Знайдено ${results.length} результатів для "${searchTerm}"`);
+        
+        // Update tab to show "all" since we're showing search results
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelector('.tab').classList.add('active');
+        currentFilter = 'all';
       } else {
         showNotification(`Нічого не знайдено для "${searchTerm}"`, 'error');
         renderItems([]);
@@ -908,6 +1236,12 @@
       e.target.reset();
       
       showNotification('Оголошення додано успішно!');
+      
+      // Show all items and update current filter
+      currentFilter = 'all';
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelector('.tab').classList.add('active');
+      
       renderItems();
       updateCounts();
     }
@@ -929,9 +1263,12 @@
       // Update active tab
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       const targetTab = Array.from(document.querySelectorAll('.tab')).find(tab => 
-        tab.textContent.toLowerCase().includes(category === 'events' ? 'події' : 
-                                             category === 'business' ? 'бізнес' :
-                                             category === 'housing' ? 'житло' : 'робота')
+        tab.textContent.toLowerCase().includes(
+          category === 'events' ? 'події' : 
+          category === 'business' ? 'бізнес' :
+          category === 'housing' ? 'житло' : 
+          category === 'jobs' ? 'робота' : 'всі'
+        )
       );
       if (targetTab) targetTab.classList.add('active');
       
@@ -947,8 +1284,9 @@
         container.innerHTML = `
           <div class="text-center py-12">
             <i class="fas fa-inbox text-4xl text-gray-300 mb-4"></i>
-            <p class="text-gray-500">Поки що немає оголошень у цій категорії</p>
-            <button onclick="openAddModal()" class="btn btn-primary mt-4">
+            <p class="text-gray-500 mb-2">Поки що немає оголошень у цій категорії</p>
+            <p class="text-sm text-gray-400 mb-6">Будьте першим, хто додасть оголошення!</p>
+            <button onclick="openAddModal()" class="btn btn-primary">
               <i class="fas fa-plus mr-2"></i>Додати перше
             </button>
           </div>
@@ -958,27 +1296,25 @@
       
       container.innerHTML = itemsToShow.map(item => `
         <div class="item">
-          <div class="flex items-start justify-between mb-3">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
             <div class="flex items-center">
               <i class="${getCategoryIcon(item.category)} text-${getCategoryColor(item.category)}-600 mr-2"></i>
               <span class="text-sm text-${getCategoryColor(item.category)}-600 font-medium">
-                ${item.category === 'events' ? 'Подія' :
-                  item.category === 'business' ? 'Бізнес' :
-                  item.category === 'housing' ? 'Житло' : 'Робота'}
+                ${getCategoryName(item.category)}
               </span>
             </div>
             <span class="text-xs text-gray-500">${formatDate(item.date)}</span>
           </div>
           
-          <h3 class="text-lg font-semibold mb-2">${item.title}</h3>
+          <h3 class="text-lg font-semibold mb-3 leading-tight">${item.title}</h3>
           <p class="text-gray-700 mb-4 leading-relaxed">${item.description}</p>
           
-          <div class="flex items-center justify-between">
-            <div class="text-sm text-gray-600">
-              <i class="fas fa-envelope mr-1"></i>
-              ${item.contact}
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="text-sm text-gray-600 flex items-center">
+              <i class="fas fa-envelope mr-2 text-gray-400"></i>
+              <span class="break-all">${item.contact}</span>
             </div>
-            <div class="text-xs text-gray-500">
+            <div class="text-xs text-gray-500 flex items-center">
               <i class="fas fa-eye mr-1"></i>
               ${item.views} переглядів
             </div>
@@ -998,7 +1334,7 @@
       Object.entries(counts).forEach(([category, count]) => {
         const element = document.getElementById(`${category}-count`);
         if (element) {
-          element.textContent = `${count} оголошень`;
+          element.textContent = `${count} ${count === 1 ? 'оголошення' : count < 5 ? 'оголошення' : 'оголошень'}`;
         }
       });
     }
@@ -1010,7 +1346,7 @@
       }
     });
     
-    // Close modal on escape key
+    // Close modal and menu on escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.querySelectorAll('.modal.active').forEach(modal => {
@@ -1018,10 +1354,36 @@
         });
         
         // Also close menu if open
-        if (document.getElementById('side-menu').classList.contains('active')) {
+        const menu = document.getElementById('side-menu');
+        if (menu.classList.contains('active')) {
           toggleMenu();
         }
       }
+    });
+    
+    // Handle search on Enter key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.id === 'search-input') {
+        performSearch();
+      }
+    });
+    
+    // Prevent zoom on double tap for iOS
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+    
+    // Handle orientation change
+    window.addEventListener('orientationchange', function() {
+      setTimeout(() => {
+        // Force a reflow to handle any layout issues
+        window.scrollTo(window.scrollX, window.scrollY);
+      }, 100);
     });
     
     // Initialize
@@ -1032,11 +1394,28 @@
       // Simulate view increments
       setInterval(() => {
         items.forEach(item => {
-          if (Math.random() < 0.1) {
-            item.views += Math.floor(Math.random() * 3) + 1;
+          if (Math.random() < 0.05) { // Reduced frequency for more realistic behavior
+            item.views += Math.floor(Math.random() * 2) + 1;
           }
         });
-      }, 30000);
+        
+        // Update display if we're showing items
+        if (document.getElementById('items-container').children.length > 0) {
+          const container = document.getElementById('items-container');
+          if (!container.querySelector('.text-center')) {
+            // Only update view counts, not the whole list
+            const viewElements = container.querySelectorAll('.text-xs.text-gray-500');
+            viewElements.forEach((elem, index) => {
+              if (elem.innerHTML.includes('переглядів')) {
+                const itemsToShow = currentFilter === 'all' ? items : items.filter(item => item.category === currentFilter);
+                if (itemsToShow[index]) {
+                  elem.innerHTML = `<i class="fas fa-eye mr-1"></i>${itemsToShow[index].views} переглядів`;
+                }
+              }
+            });
+          }
+        }
+      }, 45000);
     });
   </script>
 </body>
