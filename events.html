@@ -35,7 +35,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background: linear-gradient(90deg, #007bff, #6610f2, #e83e8c, #fd7e14);
       background-size: 300% 100%;
       animation: gradient 8s ease infinite;
     }
@@ -48,7 +48,7 @@
     .event-image {
       width: 100%;
       height: 180px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -139,7 +139,7 @@
       border-radius: 50%;
       border: 2px solid white;
       margin-left: -8px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #007bff, #6610f2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -168,20 +168,21 @@
       gap: 8px;
       white-space: nowrap;
       min-height: 44px;
+      flex-shrink: 0;
     }
     
     .filter-btn:hover {
-      border-color: #667eea;
-      color: #667eea;
+      border-color: #007bff;
+      color: #007bff;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+      box-shadow: 0 4px 12px rgba(0,123,255,0.2);
     }
     
     .filter-btn.active {
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #007bff, #0056b3);
       border-color: transparent;
       color: white;
-      box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+      box-shadow: 0 4px 16px rgba(0,123,255,0.3);
     }
     
     .floating-add-btn {
@@ -207,50 +208,6 @@
     .floating-add-btn:hover {
       transform: scale(1.1) rotate(90deg);
       box-shadow: 0 12px 40px rgba(255,107,53,0.5);
-    }
-    
-    .calendar-widget {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
-      position: sticky;
-      top: 100px;
-      margin-bottom: 24px;
-    }
-    
-    .calendar-day {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 500;
-    }
-    
-    .calendar-day:hover {
-      background: #f3f4f6;
-    }
-    
-    .calendar-day.has-event {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      position: relative;
-    }
-    
-    .calendar-day.has-event::after {
-      content: '';
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 6px;
-      height: 6px;
-      background: #fbbf24;
-      border-radius: 50%;
     }
     
     .modal {
@@ -299,13 +256,13 @@
     }
     
     .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #007bff, #0056b3);
       color: white;
     }
     
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+      box-shadow: 0 8px 20px rgba(0,123,255,0.3);
     }
     
     .btn-secondary {
@@ -331,8 +288,8 @@
     
     .input:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+      border-color: #007bff;
+      box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
     }
     
     textarea.input {
@@ -344,14 +301,14 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #10b981;
+      background: #28a745;
       color: white;
       padding: 16px 24px;
       border-radius: 12px;
       z-index: 2000;
       transform: translateX(400px);
       transition: transform 0.3s;
-      box-shadow: 0 8px 32px rgba(16,185,129,0.3);
+      box-shadow: 0 8px 32px rgba(40,167,69,0.3);
       max-width: 320px;
     }
     
@@ -360,11 +317,10 @@
     }
     
     .notification.error {
-      background: #ef4444;
-      box-shadow: 0 8px 32px rgba(239,68,68,0.3);
+      background: #dc3545;
+      box-shadow: 0 8px 32px rgba(220,53,69,0.3);
     }
     
-    /* Hamburger Menu Styles */
     .hamburger {
       display: flex;
       flex-direction: column;
@@ -448,14 +404,14 @@
     
     .menu-item:hover {
       background: #f8f9fa;
-      border-left-color: #667eea;
-      color: #667eea;
+      border-left-color: #007bff;
+      color: #007bff;
     }
     
     .menu-item.active {
       background: #f8f9fa;
-      border-left-color: #667eea;
-      color: #667eea;
+      border-left-color: #007bff;
+      color: #007bff;
     }
     
     .menu-item i {
@@ -483,6 +439,54 @@
     
     .filters-scroll::-webkit-scrollbar {
       display: none;
+    }
+
+    .footer-gradient {
+      background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .filters-container {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .filters-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 24px;
+      background: #e5e7eb;
+      margin: 0 8px;
+      flex-shrink: 0;
     }
     
     /* Mobile styles */
@@ -537,13 +541,6 @@
         max-height: 85vh;
       }
       
-      .calendar-widget {
-        padding: 16px;
-        border-radius: 16px;
-        position: static;
-        margin-bottom: 20px;
-      }
-      
       .notification {
         top: 16px;
         right: 16px;
@@ -575,9 +572,21 @@
         font-size: 16px;
         min-height: 52px;
       }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
     }
     
-    /* Very small screens */
     @media (max-width: 480px) {
       .side-menu {
         width: 100vw;
@@ -594,9 +603,16 @@
         font-size: 18px;
         min-height: 60px;
       }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
     }
     
-    /* Touch improvements */
     @media (hover: none) and (pointer: coarse) {
       .event-card:hover {
         transform: none;
@@ -699,134 +715,186 @@
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 py-6 md:py-8">
+  <main class="max-w-6xl mx-auto px-4 py-6 md:py-8">
     
     <!-- Hero Section -->
     <section class="text-center mb-8 md:mb-12">
-      <div class="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 transform -skew-y-1"></div>
-        <div class="relative z-10">
-          <h1 class="text-3xl md:text-5xl font-bold mb-4">
-            Події в Валенсії 🎉
-          </h1>
-          <p class="text-lg md:text-xl mb-6 opacity-90 max-w-2xl mx-auto">
-            Долучайтеся до найцікавіших подій української спільноти
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <button onclick="openAddEventModal()" class="btn bg-white text-purple-600 hover:bg-gray-100 flex-1">
-              <i class="fas fa-plus mr-2"></i>Додати подію
-            </button>
-            <button onclick="scrollToCalendar()" class="btn bg-white bg-opacity-20 text-white hover:bg-opacity-30 flex-1">
-              <i class="fas fa-calendar mr-2"></i>Календар
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
-        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-calendar-week text-blue-600 text-2xl"></i>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="this-week-count">0</h3>
-        <p class="text-gray-600">Подій цього тижня</p>
-      </div>
+      <h2 class="hero-title font-bold text-gray-900 mb-4">
+        Події в Валенсії 🎉
+      </h2>
+      <p class="hero-subtitle text-gray-600 mb-6 md:mb-8 px-4">
+        Долучайтеся до найцікавіших подій української спільноти
+      </p>
       
-      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
-        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-users text-green-600 text-2xl"></i>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="participants-count">0</h3>
-        <p class="text-gray-600">Учасників</p>
-      </div>
-      
-      <div class="bg-white rounded-2xl p-6 text-center shadow-lg">
-        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-heart text-purple-600 text-2xl"></i>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-2" id="popular-count">0</h3>
-        <p class="text-gray-600">Популярних подій</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto px-4">
+        <button onclick="openAddEventModal()" class="btn btn-primary flex-1">
+          <i class="fas fa-plus mr-2"></i>Додати подію
+        </button>
+        <button onclick="openSearch()" class="btn btn-secondary flex-1">
+          <i class="fas fa-search mr-2"></i>Пошук
+        </button>
       </div>
     </section>
 
     <!-- Filters -->
     <section class="mb-8">
       <div class="bg-white rounded-2xl p-4 shadow-sm">
-        <div class="filters-scroll">
-          <div class="flex gap-3 pb-2" style="min-width: max-content;">
-            <button class="filter-btn active" onclick="filterEvents('all', this)">
-              <i class="fas fa-list"></i>Всі події
-            </button>
-            <button class="filter-btn" onclick="filterEvents('social', this)">
-              <i class="fas fa-users"></i>Соціальні
-            </button>
-            <button class="filter-btn" onclick="filterEvents('cultural', this)">
-              <i class="fas fa-theater-masks"></i>Культурні
-            </button>
-            <button class="filter-btn" onclick="filterEvents('educational', this)">
-              <i class="fas fa-graduation-cap"></i>Освітні
-            </button>
-            <button class="filter-btn" onclick="filterEvents('business', this)">
-              <i class="fas fa-handshake"></i>Бізнес
-            </button>
-            <button class="filter-btn" onclick="filterEvents('sports', this)">
-              <i class="fas fa-running"></i>Спорт
-            </button>
-            <button class="filter-btn" onclick="filterEvents('charity', this)">
-              <i class="fas fa-heart"></i>Благодійність
-            </button>
-          </div>
+        <div class="filters-container">
+          <button class="filter-btn active" onclick="filterEvents('all', this)">
+            <i class="fas fa-list"></i>Всі події
+          </button>
+          <button class="filter-btn" onclick="filterEvents('social', this)">
+            <i class="fas fa-users"></i>Соціальні
+          </button>
+          <button class="filter-btn" onclick="filterEvents('cultural', this)">
+            <i class="fas fa-theater-masks"></i>Культурні
+          </button>
+          <button class="filter-btn" onclick="filterEvents('educational', this)">
+            <i class="fas fa-graduation-cap"></i>Освітні
+          </button>
+          <button class="filter-btn" onclick="filterEvents('business', this)">
+            <i class="fas fa-handshake"></i>Бізнес
+          </button>
+          <button class="filter-btn" onclick="filterEvents('sports', this)">
+            <i class="fas fa-running"></i>Спорт
+          </button>
+          <button class="filter-btn" onclick="filterEvents('charity', this)">
+            <i class="fas fa-heart"></i>Благодійність
+          </button>
+          <button class="filter-btn" onclick="filterEvents('family', this)">
+            <i class="fas fa-baby"></i>Сімейні
+          </button>
+          <button class="filter-btn" onclick="filterEvents('food', this)">
+            <i class="fas fa-utensils"></i>Кулінарія
+          </button>
+          <button class="filter-btn" onclick="filterEvents('travel', this)">
+            <i class="fas fa-plane"></i>Подорожі
+          </button>
+          <button class="filter-btn" onclick="filterEvents('tech', this)">
+            <i class="fas fa-laptop"></i>IT
+          </button>
+          <button class="filter-btn" onclick="filterEvents('art', this)">
+            <i class="fas fa-palette"></i>Мистецтво
+          </button>
+          <button class="filter-btn" onclick="filterEvents('music', this)">
+            <i class="fas fa-music"></i>Музика
+          </button>
+          <button class="filter-btn" onclick="filterEvents('health', this)">
+            <i class="fas fa-heartbeat"></i>Здоров'я
+          </button>
+          
+          <!-- Date Filters -->
+          <div class="filter-divider"></div>
+          <button class="filter-btn" onclick="filterByDate('today', this)">
+            <i class="fas fa-calendar-day"></i>Сьогодні
+          </button>
+          <button class="filter-btn" onclick="filterByDate('week', this)">
+            <i class="fas fa-calendar-week"></i>Цей тиждень
+          </button>
+          <button class="filter-btn" onclick="filterByDate('month', this)">
+            <i class="fas fa-calendar-alt"></i>Цей місяць
+          </button>
+          <button class="filter-btn" onclick="showDateRangePicker()">
+            <i class="fas fa-calendar-range"></i>Обрати період
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Main Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      
-      <!-- Events List -->
-      <div class="lg:col-span-3">
-        <div id="events-container" class="space-y-6">
-          <!-- Events will be loaded here -->
-        </div>
-        
-        <!-- Load More Button -->
-        <div class="text-center mt-12">
-          <button id="load-more-btn" onclick="loadMoreEvents()" class="btn btn-secondary">
-            <i class="fas fa-plus mr-2"></i>Завантажити ще
-          </button>
-        </div>
+    <!-- Events Grid -->
+    <section>
+      <div class="events-grid" id="events-container">
+        <!-- Events will be loaded here -->
       </div>
       
-      <!-- Sidebar -->
-      <div class="lg:col-span-1">
-        <!-- Mini Calendar -->
-        <div class="calendar-widget" id="calendar-section">
-          <h3 class="text-lg font-semibold mb-4 flex items-center">
-            <i class="fas fa-calendar-alt mr-2 text-purple-600"></i>
-            Календар подій
-          </h3>
-          <div id="mini-calendar">
-            <!-- Calendar will be generated here -->
-          </div>
-        </div>
-        
-        <!-- Upcoming Events -->
-        <div class="bg-white rounded-2xl p-6 shadow-lg">
-          <h3 class="text-lg font-semibold mb-4 flex items-center">
-            <i class="fas fa-clock mr-2 text-orange-600"></i>
-            Найближчі події
-          </h3>
-          <div id="upcoming-events" class="space-y-3">
-            <!-- Upcoming events will be loaded here -->
-          </div>
-        </div>
+      <!-- Load More Button -->
+      <div class="text-center mt-12">
+        <button id="load-more-btn" onclick="loadMoreEvents()" class="btn btn-secondary">
+          <i class="fas fa-plus mr-2"></i>Завантажити ще
+        </button>
       </div>
-      
-    </div>
+    </section>
 
   </main>
+
+  <!-- Footer -->
+  <footer class="footer-gradient mt-12 md:mt-16 py-8 md:py-12 text-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        
+        <!-- About -->
+        <div class="col-span-1 md:col-span-2 lg:col-span-1">
+          <div class="flex items-center mb-4">
+            <img src="logo.png" alt="VLC.UA Logo" class="h-8 w-auto mr-3" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <h3 class="text-xl font-bold" style="display:none;">VLC.UA</h3>
+          </div>
+          <p class="text-white text-opacity-80 mb-6 leading-relaxed">
+            Найбільша українська спільнота в Валенсії. Допомагаємо адаптуватися, 
+            знаходити житло, роботу та нових друзів.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-telegram text-2xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-instagram text-2xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-facebook text-2xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-semibold mb-4 text-lg">Швидкі посилання</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="events.html" class="hover:text-yellow-300 transition-colors block py-1">Події</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Бізнес-каталог</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Пошук житла</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Вакансії</a></li>
+          </ul>
+        </div>
+        
+        <!-- Help -->
+        <div>
+          <h4 class="font-semibold mb-4 text-lg">Допомога</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Як подати оголошення</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Правила спільноти</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Корисні документи</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Контакти</a></li>
+          </ul>
+        </div>
+        
+        <!-- Contact -->
+        <div>
+          <h4 class="font-semibold mb-4 text-lg">Зв'язок з нами</h4>
+          <div class="space-y-4 text-white text-opacity-80">
+            <div class="flex items-center">
+              <i class="fas fa-envelope mr-3 w-5"></i>
+              <a href="mailto:info@vlc.ua" class="hover:text-yellow-300 transition-colors">info@vlc.ua</a>
+            </div>
+            <div class="flex items-center">
+              <i class="fab fa-telegram mr-3 w-5"></i>
+              <a href="https://t.me/vlc_valencia" class="hover:text-yellow-300 transition-colors">@vlc_valencia</a>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-3 w-5"></i>
+              <span>Валенсія, Іспанія</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="border-t border-white border-opacity-20 mt-8 pt-6 md:pt-8 text-center">
+        <p class="text-white text-opacity-60 text-sm md:text-base">
+          © 2025 VLC.UA - Українці в Валенсії. Створено з ❤️ для нашої спільноти
+        </p>
+      </div>
+    </div>
+  </footer>
 
   <!-- Floating Add Button -->
   <button class="floating-add-btn" onclick="openAddEventModal()">
@@ -861,6 +929,13 @@
                 <option value="business">Бізнес</option>
                 <option value="sports">Спорт</option>
                 <option value="charity">Благодійність</option>
+                <option value="family">Сімейна</option>
+                <option value="food">Кулінарія</option>
+                <option value="travel">Подорожі</option>
+                <option value="tech">Технології</option>
+                <option value="art">Мистецтво</option>
+                <option value="music">Музика</option>
+                <option value="health">Здоров'я</option>
               </select>
             </div>
           </div>
@@ -965,7 +1040,9 @@
     // Data storage
     let events = [];
     let currentFilter = 'all';
-    let eventsPerPage = 6;
+    let currentDateFilter = 'all';
+    let customDateRange = null;
+    let eventsPerPage = 9;
     let currentPage = 1;
     
     // Sample events data
@@ -1003,7 +1080,7 @@
       {
         id: 3,
         title: 'Майстер-клас з української кухні',
-        type: 'cultural',
+        type: 'food',
         date: new Date('2025-08-05'),
         time: '15:00',
         location: 'Кулінарна студія, Carrer de Xàtiva',
@@ -1013,7 +1090,7 @@
         participants: 12,
         maxParticipants: 15,
         status: 'upcoming',
-        image: '👩‍🍳'
+        image: '🍽️'
       },
       {
         id: 4,
@@ -1058,7 +1135,142 @@
         participants: 156,
         maxParticipants: 200,
         status: 'upcoming',
+        image: '❤️'
+      },
+      {
+        id: 7,
+        title: 'Спільна прогулянка містом',
+        type: 'social',
+        date: new Date('2025-08-03'),
+        time: '16:00',
+        location: 'Центральний ринок Валенсії',
+        description: 'Познайомимося з історією Валенсії та найкрасивішими місцями міста. Приєднуйтесь до дружньої групи для спільної прогулянки та нових знайомств.',
+        contact: '@valencia_walks',
+        organizer: 'Анна Коваль',
+        participants: 28,
+        maxParticipants: 40,
+        status: 'upcoming',
+        image: '👥'
+      },
+      {
+        id: 8,
+        title: 'Волейбол на пляжі',
+        type: 'sports',
+        date: new Date('2025-08-06'),
+        time: '11:00',
+        location: 'Пляж Мальварроса',
+        description: 'Грайте у волейбол на найкрасивішому пляжі Валенсії! Приносьте воду та хорошій настрій. Після гри - купання в морі.',
+        contact: '+34 555 123 789',
+        organizer: 'Михайло Сидоренко',
+        participants: 16,
+        maxParticipants: 20,
+        status: 'upcoming',
+        image: '🏐'
+      },
+      {
+        id: 9,
+        title: 'Лекція про права в Іспанії',
+        type: 'educational',
+        date: new Date('2025-08-04'),
+        time: '19:00',
+        location: 'Громадський центр, Carrer de la Pau',
+        description: 'Юрист розповість про ваші права в Іспанії: трудові відносини, оренда житла, медицина. Буде час для запитань та відповідей.',
+        contact: 'legal@vlc.ua',
+        organizer: 'Олена Кравець',
+        participants: 31,
+        maxParticipants: 60,
+        status: 'upcoming',
+        image: '⚖️'
+      },
+      {
+        id: 10,
+        title: 'Дитячий майстер-клас з малювання',
+        type: 'family',
+        date: new Date('2025-08-07'),
+        time: '14:00',
+        location: 'Дитячий центр, Carrer de Russafa',
+        description: 'Творчий майстер-клас для дітей 5-12 років. Навчимося малювати українські орнаменти. Батьки можуть залишитися та поспілкуватися за чашкою кави.',
+        contact: '@kids_art_vlc',
+        organizer: 'Світлана Петрук',
+        participants: 8,
+        maxParticipants: 15,
+        status: 'upcoming',
+        image: '👨‍👩‍👧‍👦'
+      },
+      {
+        id: 11,
+        title: 'IT зустріч: Робота в tech в Іспанії',
+        type: 'tech',
+        date: new Date('2025-08-09'),
+        time: '18:00',
+        location: 'Коворкінг TechHub, Carrer de Colón',
+        description: 'Досвідчені IT-спеціалісти поділяться секретами працевлаштування в іспанських tech компаніях. Нетворкінг, обмін досвідом та корисні поради.',
+        contact: 'tech@vlc.ua',
+        organizer: 'Олексій Коваль',
+        participants: 24,
+        maxParticipants: 40,
+        status: 'upcoming',
+        image: '💻'
+      },
+      {
+        id: 12,
+        title: 'Концерт української музики',
+        type: 'music',
+        date: new Date('2025-08-12'),
+        time: '19:30',
+        location: 'Kafe Antico, Carrer del Comte d\'Altea',
+        description: 'Вечір української музики з виступами місцевих українських музикантів. Folk, rock та сучасна музика. Затишна атмосфера, українські напої.',
+        contact: '@music_vlc',
+        organizer: 'Тарас Музичний',
+        participants: 42,
+        maxParticipants: 60,
+        status: 'upcoming',
         image: '🎵'
+      },
+      {
+        id: 13,
+        title: 'Виставка українського мистецтва',
+        type: 'art',
+        date: new Date('2025-08-15'),
+        time: '18:00',
+        location: 'Галерея Arte Valencia, Carrer de la Paz',
+        description: 'Персональна виставка робіт українських художників-емігрантів. Живопис, графіка, інсталяції. Відкриття з фуршетом та зустріччю з авторами.',
+        contact: 'art@vlc.ua',
+        organizer: 'Катерина Артистка',
+        participants: 67,
+        maxParticipants: 100,
+        status: 'upcoming',
+        image: '🎨'
+      },
+      {
+        id: 14,
+        title: 'Йога і медитація українською',
+        type: 'health',
+        date: new Date('2025-08-11'),
+        time: '09:00',
+        location: 'Парк Турія, біля музею',
+        description: 'Ранкова практика йоги та медитації під відкритим небом. Інструкції українською мовою. Підходить для всіх рівнів підготовки. Принесіть килимок.',
+        contact: '+34 666 777 888',
+        organizer: 'Оксана Здорова',
+        participants: 18,
+        maxParticipants: 25,
+        status: 'upcoming',
+        image: '🧘‍♀️'
+      },
+      {
+        id: 15,
+        title: 'Подорож до Куенки',
+        type: 'travel',
+        date: new Date('2025-08-16'),
+        time: '08:00',
+        location: 'Збір біля вокзалу Nord',
+        description: 'Одноденна екскурсія до мальовничого міста Куенка. Висячі будинки, собор, музеї. Автобус, гід, обід включені. Реєстрація до 10 серпня.',
+        contact: 'travel@vlc.ua',
+        organizer: 'Іван Мандрівник',
+        participants: 35,
+        maxParticipants: 45,
+        status: 'upcoming',
+        image: '✈️'
       }
     ];
     
@@ -1128,7 +1340,14 @@
         educational: '📚',
         business: '💼',
         sports: '⚽',
-        charity: '❤️'
+        charity: '❤️',
+        family: '👨‍👩‍👧‍👦',
+        food: '🍽️',
+        travel: '✈️',
+        tech: '💻',
+        art: '🎨',
+        music: '🎵',
+        health: '🧘‍♀️'
       };
       return icons[type] || '📅';
     }
@@ -1140,7 +1359,14 @@
         educational: 'Освітня',
         business: 'Бізнес',
         sports: 'Спорт',
-        charity: 'Благодійність'
+        charity: 'Благодійність',
+        family: 'Сімейна',
+        food: 'Кулінарія',
+        travel: 'Подорожі',
+        tech: 'Технології',
+        art: 'Мистецтво',
+        music: 'Музика',
+        health: 'Здоров\'я'
       };
       return names[type] || type;
     }
@@ -1201,14 +1427,45 @@
         renderEvents(results);
         showNotification(`Знайдено ${results.length} подій для "${searchTerm}"`);
         
-        // Reset filter
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector('.filter-btn').classList.add('active');
-        currentFilter = 'all';
+        // Reset filters
+        resetFilters();
       } else {
         showNotification(`Не знайдено подій для "${searchTerm}"`, 'error');
         renderEvents([]);
       }
+    }
+    
+    // Date filter functions
+    function filterByDate(period, buttonElement) {
+      resetFilters();
+      buttonElement.classList.add('active');
+      
+      currentDateFilter = period;
+      currentPage = 1;
+      renderEvents();
+    }
+    
+    function showDateRangePicker() {
+      const startDate = prompt('Введіть початкову дату (YYYY-MM-DD):');
+      const endDate = prompt('Введіть кінцеву дату (YYYY-MM-DD):');
+      
+      if (startDate && endDate) {
+        customDateRange = {
+          start: new Date(startDate),
+          end: new Date(endDate)
+        };
+        currentDateFilter = 'custom';
+        currentPage = 1;
+        renderEvents();
+        
+        resetFilters();
+        document.querySelector('button[onclick="showDateRangePicker()"]').classList.add('active');
+        showNotification(`Фільтр по періоду: ${startDate} - ${endDate}`);
+      }
+    }
+    
+    function resetFilters() {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     }
     
     // Event submission
@@ -1238,26 +1495,77 @@
       
       showNotification('Подію додано успішно!');
       
-      // Reset to show all events
+      // Reset filters
       currentFilter = 'all';
+      currentDateFilter = 'all';
       currentPage = 1;
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      resetFilters();
       document.querySelector('.filter-btn').classList.add('active');
       
       renderEvents();
-      updateStats();
-      generateCalendar();
-      renderUpcomingEvents();
     }
     
     // Filter functions
     function filterEvents(filter, buttonElement) {
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      resetFilters();
       buttonElement.classList.add('active');
       
       currentFilter = filter;
+      currentDateFilter = 'all';
       currentPage = 1;
       renderEvents();
+    }
+    
+    // Get filtered events
+    function getFilteredEvents() {
+      let filteredEvents = events;
+      
+      // Filter by type
+      if (currentFilter !== 'all') {
+        filteredEvents = filteredEvents.filter(event => event.type === currentFilter);
+      }
+      
+      // Filter by date
+      if (currentDateFilter !== 'all') {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        filteredEvents = filteredEvents.filter(event => {
+          const eventDate = new Date(event.date);
+          eventDate.setHours(0, 0, 0, 0);
+          
+          switch (currentDateFilter) {
+            case 'today':
+              return eventDate.getTime() === today.getTime();
+              
+            case 'week':
+              const weekStart = new Date(today);
+              const weekEnd = new Date(today);
+              weekStart.setDate(today.getDate() - today.getDay());
+              weekEnd.setDate(weekStart.getDate() + 6);
+              return eventDate >= weekStart && eventDate <= weekEnd;
+              
+            case 'month':
+              return eventDate.getMonth() === today.getMonth() && 
+                     eventDate.getFullYear() === today.getFullYear();
+                     
+            case 'custom':
+              if (customDateRange) {
+                const start = new Date(customDateRange.start);
+                const end = new Date(customDateRange.end);
+                start.setHours(0, 0, 0, 0);
+                end.setHours(23, 59, 59, 999);
+                return eventDate >= start && eventDate <= end;
+              }
+              return true;
+              
+            default:
+              return true;
+          }
+        });
+      }
+      
+      return filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
     
     // Render functions
@@ -1268,7 +1576,7 @@
       
       if (eventsToShow.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-16">
+          <div class="col-span-full text-center py-16">
             <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <i class="fas fa-calendar-times text-gray-400 text-3xl"></i>
             </div>
@@ -1318,7 +1626,7 @@
                 <span class="text-sm">${event.location}</span>
               </div>
               
-              <p class="text-gray-700 mb-4 leading-relaxed line-clamp-3">${event.description}</p>
+              <p class="text-gray-700 mb-4 leading-relaxed line-clamp-3">${event.description.substring(0, 120)}${event.description.length > 120 ? '...' : ''}</p>
               
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
@@ -1361,16 +1669,6 @@
       }
       
       return avatars;
-    }
-    
-    function getFilteredEvents() {
-      if (currentFilter === 'all') {
-        return events.sort((a, b) => new Date(a.date) - new Date(b.date));
-      }
-      
-      return events
-        .filter(event => event.type === currentFilter)
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
     }
     
     function loadMoreEvents() {
@@ -1453,12 +1751,12 @@
             
             <div class="space-y-3">
               ${status === 'upcoming' ? `
-                <button class="btn btn-primary w-full">
+                <button class="btn btn-primary w-full" onclick="joinEvent(${event.id})">
                   <i class="fas fa-calendar-check mr-2"></i>Взяти участь
                 </button>
               ` : ''}
               
-              <button class="btn btn-secondary w-full">
+              <button class="btn btn-secondary w-full" onclick="shareEvent(${event.id})">
                 <i class="fas fa-share mr-2"></i>Поділитися
               </button>
             </div>
@@ -1469,98 +1767,48 @@
       document.getElementById('event-details-modal').classList.add('active');
     }
     
-    function updateStats() {
-      const today = new Date();
-      const weekFromNow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    // Join event function
+    function joinEvent(eventId) {
+      const event = events.find(e => e.id === eventId);
+      if (!event) return;
       
-      const thisWeekEvents = events.filter(event => {
-        const eventDate = new Date(event.date);
-        return eventDate >= today && eventDate <= weekFromNow;
-      });
-      
-      const totalParticipants = events.reduce((sum, event) => sum + event.participants, 0);
-      const popularEvents = events.filter(event => event.participants > 20);
-      
-      document.getElementById('this-week-count').textContent = thisWeekEvents.length;
-      document.getElementById('participants-count').textContent = totalParticipants;
-      document.getElementById('popular-count').textContent = popularEvents.length;
-    }
-    
-    function generateCalendar() {
-      const calendar = document.getElementById('mini-calendar');
-      const today = new Date();
-      const currentMonth = today.getMonth();
-      const currentYear = today.getFullYear();
-      
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      
-      const monthNames = [
-        'Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
-        'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'
-      ];
-      
-      let calendarHTML = `
-        <div class="text-center mb-4">
-          <h4 class="font-semibold">${monthNames[currentMonth]} ${currentYear}</h4>
-        </div>
-        
-        <div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-500 mb-2">
-          <div>Нд</div><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div>
-        </div>
-        
-        <div class="grid grid-cols-7 gap-1">
-      `;
-      
-      // Empty cells for days before month starts
-      for (let i = 0; i < firstDay; i++) {
-        calendarHTML += '<div></div>';
-      }
-      
-      // Days of the month
-      for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(currentYear, currentMonth, day);
-        const hasEvent = events.some(event => {
-          const eventDate = new Date(event.date);
-          return eventDate.toDateString() === date.toDateString();
-        });
-        
-        const isToday = date.toDateString() === today.toDateString();
-        const dayClass = hasEvent ? 'has-event' : (isToday ? 'bg-blue-100 text-blue-600' : '');
-        
-        calendarHTML += `<div class="calendar-day ${dayClass}">${day}</div>`;
-      }
-      
-      calendarHTML += '</div>';
-      calendar.innerHTML = calendarHTML;
-    }
-    
-    function renderUpcomingEvents() {
-      const container = document.getElementById('upcoming-events');
-      const upcoming = events
-        .filter(event => getEventStatus(event) === 'upcoming')
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .slice(0, 3);
-      
-      if (upcoming.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-sm">Немає найближчих подій</p>';
+      if (event.maxParticipants && event.participants >= event.maxParticipants) {
+        showNotification('Вибачте, всі місця зайняті', 'error');
         return;
       }
       
-      container.innerHTML = upcoming.map(event => `
-        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer" onclick="showEventDetails(${event.id})">
-          <div class="text-2xl mr-3">${event.image}</div>
-          <div class="flex-1 min-w-0">
-            <h4 class="font-medium text-sm truncate">${event.title}</h4>
-            <p class="text-xs text-gray-500">${formatDate(event.date)} о ${formatTime(event.time)}</p>
-          </div>
-        </div>
-      `).join('');
+      event.participants += 1;
+      showNotification('Ви успішно приєдналися до події!');
+      closeModal('event-details-modal');
+      renderEvents();
     }
     
-    function scrollToCalendar() {
-      document.getElementById('calendar-section').scrollIntoView({ 
-        behavior: 'smooth' 
+    // Share event function
+    function shareEvent(eventId) {
+      const event = events.find(e => e.id === eventId);
+      if (!event) return;
+      
+      const shareText = `${event.title}\n📅 ${formatDate(event.date)} о ${event.time}\n📍 ${event.location}\n\n${event.description}\n\nПодробиці: ${window.location.origin}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: event.title,
+          text: shareText,
+          url: window.location.href
+        }).catch(() => {
+          copyToClipboard(shareText);
+        });
+      } else {
+        copyToClipboard(shareText);
+      }
+    }
+    
+    // Copy to clipboard function
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showNotification('Посилання скопійовано!');
+      }).catch(() => {
+        showNotification('Не вдалося скопіювати', 'error');
       });
     }
     
@@ -1579,76 +1827,36 @@
         });
         
         const menu = document.getElementById('side-menu');
+        const overlay = document.getElementById('menu-overlay');
+        const hamburger = document.getElementById('hamburger');
+        
         if (menu.classList.contains('active')) {
-          toggleMenu();
+          menu.classList.remove('active');
+          overlay.classList.remove('active');
+          hamburger.classList.remove('active');
+          document.body.style.overflow = '';
         }
       }
     });
     
-    // Handle search on Enter key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && e.target.id === 'search-input') {
-        performSearch();
-      }
-    });
-    
-    // Prevent zoom on double tap for iOS
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function (event) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, false);
-    
-    // Handle orientation change
-    window.addEventListener('orientationchange', function() {
-      setTimeout(() => {
-        window.scrollTo(window.scrollX, window.scrollY);
-      }, 100);
-    });
-    
-    // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-      renderEvents();
-      updateStats();
-      generateCalendar();
-      renderUpcomingEvents();
-      
-      // Simulate participant updates
-      setInterval(() => {
-        events.forEach(event => {
-          if (Math.random() < 0.1 && getEventStatus(event) === 'upcoming') {
-            event.participants += Math.floor(Math.random() * 3) + 1;
-            if (event.maxParticipants && event.participants > event.maxParticipants) {
-              event.participants = event.maxParticipants;
-            }
+    // Search on enter key
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            performSearch();
           }
         });
-        
-        // Update display if we're showing events
-        const container = document.getElementById('events-container');
-        if (container.children.length > 0 && !container.querySelector('.text-center')) {
-          updateStats();
-          renderUpcomingEvents();
-          
-          // Update participant counts in visible cards
-          const participantElements = container.querySelectorAll('.text-sm.text-gray-600');
-          participantElements.forEach((elem, index) => {
-            if (elem.textContent.includes('учасників')) {
-              const visibleEvents = getFilteredEvents().slice(0, currentPage * eventsPerPage);
-              if (visibleEvents[index]) {
-                const event = visibleEvents[index];
-                const participantsText = event.maxParticipants 
-                  ? `${event.participants}/${event.maxParticipants}` 
-                  : `${event.participants}`;
-                elem.textContent = `${participantsText} учасників`;
-              }
-            }
-          });
-        }
-      }, 30000);
+      }
+      
+      // Initialize the page
+      renderEvents();
+    });
+    
+    // Initialize the page on load
+    window.addEventListener('load', () => {
+      renderEvents();
     });
   </script>
 </body>
