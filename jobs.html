@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Робота - VLC.UA - Українці в Валенсії</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    * {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    }
+    
+    @media (max-width: 768px) {
+      .card {
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+    }
+    
+    @media (max-width: 768px) {
+      .btn {
+        padding: 14px 20px;
+        font-size: 16px;
+        min-height: 48px;
+      }
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: white;
+      transform: translateY(0);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,123,255,0.3);
+    }
+    
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #dee2e6;
+    }
+    
+    .btn-secondary:hover {
+      background: #e2e6ea;
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+      color: white;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-orange {
+      background: linear-gradient(135deg, #fd7e14, #e55a00);
+      color: white;
+    }
+
+    .btn-orange:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(253, 126, 20, 0.3);
+    }
+    
+    /* Hamburger Menu Styles */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 12px;
+      z-index: 1001;
+      position: relative;
+      min-height: 44px;
+      min-width: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: white;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .side-menu {
+        width: 350px;
+        left: -350px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .side-menu {
+        width: 100vw;
+        left: -100vw;
+      }
+    }
+    
+    .side-menu.active {
+      left: 0;
+    }
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 4px solid transparent;
+      min-height: 56px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        padding: 24px;
+        font-size: 18px;
+        min-height: 64px;
+      }
+    }
+    
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: #007bff;
+      color: #007bff;
+    }
+
+    .menu-item.active {
+      background: #f0f8ff;
+      border-left-color: #007bff;
+      color: #007bff;
+    }
+    
+    .menu-item i {
+      margin-right: 16px;
+      width: 24px;
+      font-size: 18px;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        padding: 24px;
+        margin: 16px;
+        max-height: 85vh;
+        border-radius: 16px;
+      }
+    }
+    
+    .input {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.2s;
+      min-height: 48px;
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    }
+
+    textarea.input {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .job-item {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      border-left: 4px solid #fd7e14;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+    }
+
+    @media (max-width: 768px) {
+      .job-item {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+      }
+    }
+
+    .job-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .job-item.employer {
+      border-left-color: #28a745;
+    }
+
+    .job-item.candidate {
+      border-left-color: #007bff;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      z-index: 2000;
+      transform: translateX(400px);
+      transition: transform 0.3s;
+      box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+      max-width: 320px;
+    }
+
+    @media (max-width: 768px) {
+      .notification {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        transform: translateY(-100px);
+        text-align: center;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+      }
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.error {
+      background: #dc3545;
+      box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+    }
+    
+    .tab {
+      padding: 12px 20px;
+      background: #f8f9fa;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+      margin-right: 4px;
+      transition: all 0.2s;
+      font-size: 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .tab {
+        flex: 1;
+        padding: 16px 8px;
+        font-size: 13px;
+        margin-right: 2px;
+        border-radius: 6px 6px 0 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tabs-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .tabs-wrapper {
+        display: flex;
+        min-width: 400px;
+      }
+      
+      .tab {
+        white-space: nowrap;
+        min-width: 80px;
+      }
+    }
+    
+    .tab.active {
+      background: white;
+      border-bottom: 2px solid #fd7e14;
+      color: #fd7e14;
+    }
+
+    .salary-badge {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .job-type-badge {
+      background: #e9ecef;
+      color: #495057;
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .urgent-badge {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    .remote-badge {
+      background: linear-gradient(135deg, #6f42c1, #5a32a3);
+      color: white;
+      font-size: 12px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-chip {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      color: #495057;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip:hover {
+      background: #e9ecef;
+    }
+
+    .filter-chip.active {
+      background: #fd7e14;
+      color: white;
+      border-color: #fd7e14;
+    }
+
+    .search-bar {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logo {
+      max-height: 40px;
+      width: auto;
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        max-height: 36px;
+      }
+    }
+
+    .footer-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .header-container {
+      height: 64px;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        height: 56px;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .action-buttons {
+        gap: 0.5rem;
+      }
+      
+      .action-buttons .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      
+      .action-buttons .btn span {
+        display: none;
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .card:hover {
+        transform: none;
+      }
+      
+      .btn-primary:hover {
+        transform: none;
+      }
+      
+      .job-item:hover {
+        transform: none;
+      }
+    }
+
+    @supports (padding: max(0px)) {
+      .header-container {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+      }
+      
+      .side-menu {
+        padding-left: max(0px, env(safe-area-inset-left));
+      }
+    }
+
+    .side-menu::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .side-menu::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    .side-menu::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  
+  <!-- Menu Overlay -->
+  <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+  
+  <!-- Side Menu -->
+  <div id="side-menu" class="side-menu">
+    <div class="p-6 border-b border-gray-200 text-center">
+      <img src="logo.png" alt="VLC.UA Logo" class="logo mx-auto mb-2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <h2 class="text-xl font-bold text-gray-800" style="display:none;">VLC.UA</h2>
+      <p class="text-sm text-gray-600">Українці в Валенсії</p>
+    </div>
+    
+    <nav class="py-4">
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        Головна
+      </a>
+      <a href="events.html" class="menu-item">
+        <i class="fas fa-calendar"></i>
+        Події
+      </a>
+      <a href="business.html" class="menu-item">
+        <i class="fas fa-store"></i>
+        Бізнес
+      </a>
+      <a href="housing.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        Житло
+      </a>
+      <a href="jobs.html" class="menu-item active">
+        <i class="fas fa-briefcase"></i>
+        Робота
+      </a>
+      <div class="border-t border-gray-200 mt-4 pt-4">
+        <a href="#" class="menu-item">
+          <i class="fas fa-book"></i>
+          Корисні поради
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-file-alt"></i>
+          Документи
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-question-circle"></i>
+          Як зробити...
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-users"></i>
+          Про спільноту
+        </a>
+        <a href="#" class="menu-item">
+          <i class="fas fa-envelope"></i>
+          Контакти
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="header-container flex justify-between items-center">
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        <!-- Logo -->
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+          <img src="logo.png" alt="VLC.UA Logo" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <h1 class="text-2xl font-bold text-blue-600" style="display:none;">VLC.UA</h1>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button onclick="openSearch()" class="text-gray-600 hover:text-orange-600 text-lg transition-colors p-2">
+            <i class="fas fa-search"></i>
+          </button>
+          <button onclick="openAddModal()" class="btn btn-orange">
+            <i class="fas fa-plus mr-2"></i><span>Додати</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-6 md:py-8">
+    
+    <!-- Hero -->
+    <section class="text-center mb-8 md:mb-12">
+      <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl p-6 md:p-8 mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">
+          <i class="fas fa-briefcase mr-3"></i>Робота в Валенсії
+        </h1>
+        <p class="text-lg md:text-xl mb-6 opacity-90 max-w-3xl mx-auto leading-relaxed">
+          Знайдіть роботу мрії або ідеального кандидата в українській спільноті Валенсії
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <button onclick="openSearch()" class="btn bg-white text-orange-600 hover:bg-gray-100 flex-1">
+            <i class="fas fa-search mr-2"></i>Пошук роботи
+          </button>
+          <button onclick="openAddModal()" class="btn btn-secondary bg-white bg-opacity-20 text-white hover:bg-opacity-30 flex-1">
+            <i class="fas fa-plus mr-2"></i>Додати вакансію
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="mb-8">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-orange-600 mb-1" id="total-jobs">0</div>
+          <div class="text-sm text-gray-600">Всього пропозицій</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-green-600 mb-1" id="employer-count">0</div>
+          <div class="text-sm text-gray-600">Вакансії</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-blue-600 mb-1" id="candidate-count">0</div>
+          <div class="text-sm text-gray-600">Резюме</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-2xl font-bold text-purple-600 mb-1" id="urgent-count">0</div>
+          <div class="text-sm text-gray-600">Терміново</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Categories -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Популярні категорії</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="card text-center" onclick="quickFilter('ресторан')">
+          <i class="fas fa-utensils text-2xl text-orange-600 mb-2"></i>
+          <div class="font-medium">Ресторани</div>
+        </div>
+        <div class="card text-center" onclick="quickFilter('будівництво')">
+          <i class="fas fa-hard-hat text-2xl text-yellow-600 mb-2"></i>
+          <div class="font-medium">Будівництво</div>
+        </div>
+        <div class="card text-center" onclick="quickFilter('прибирання')">
+          <i class="fas fa-broom text-2xl text-green-600 mb-2"></i>
+          <div class="font-medium">Прибирання</div>
+        </div>
+        <div class="card text-center" onclick="quickFilter('IT')">
+          <i class="fas fa-laptop-code text-2xl text-blue-600 mb-2"></i>
+          <div class="font-medium">IT</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <section>
+      <div class="bg-white rounded-xl p-4 md:p-6 shadow-sm">
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1">
+              <input type="text" id="main-search" placeholder="Пошук за професією, компанією..." 
+                     class="input" onkeypress="handleEnterSearch(event)">
+            </div>
+            <button onclick="performMainSearch()" class="btn btn-orange">
+              <i class="fas fa-search mr-2"></i>Знайти
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chips">
+          <div class="filter-chip active" onclick="toggleFilter(this, 'all')">
+            <i class="fas fa-list mr-1"></i>Всі
+          </div>
+          <div class="filter-chip" onclick="toggleFilter(this, 'employer')">
+            <i class="fas fa-building mr-1"></i>Вакансії
+          </div>
+          <div class="filter-chip" onclick="toggleFilter(this, 'candidate')">
+            <i class="fas fa-user mr-1"></i>Резюме
+          </div>
+          <div class="filter-chip" onclick="toggleFilter(this, 'urgent')">
+            <i class="fas fa-exclamation-triangle mr-1"></i>Терміново
+          </div>
+          <div class="filter-chip" onclick="toggleFilter(this, 'remote')">
+            <i class="fas fa-home mr-1"></i>Віддалено
+          </div>
+        </div>
+        
+        <!-- Items List -->
+        <div id="jobs-container">
+          <div class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-3xl text-gray-400 mb-4"></i>
+            <p class="text-gray-600">Завантаження вакансій та резюме...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-gradient mt-12 md:mt-16 py-8 md:py-12 text-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        
+        <!-- About -->
+        <div class="col-span-1 md:col-span-2 lg:col-span-1">
+          <div class="flex items-center mb-4">
+            <img src="logo.png" alt="VLC.UA Logo" class="h-8 w-auto mr-3" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <h3 class="text-xl font-bold" style="display:none;">VLC.UA</h3>
+          </div>
+          <p class="text-white text-opacity-80 mb-6 leading-relaxed">
+            Найбільша українська спільнота в Валенсії. Допомагаємо знаходити роботу 
+            та працівників у нашій спільноті.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-telegram text-2xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-instagram text-2xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-yellow-300 transition-colors p-2">
+              <i class="fab fa-facebook text-2xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-semibold mb-4 text-lg">Швидкі посилання</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="index.html" class="hover:text-yellow-300 transition-colors block py-1">Головна</a></li>
+            <li><a href="events.html" class="hover:text-yellow-300 transition-colors block py-1">Події</a></li>
+            <li><a href="business.html" class="hover:text-yellow-300 transition-colors block py-1">Бізнес</a></li>
+            <li><a href="housing.html" class="hover:text-yellow-300 transition-colors block py-1">Житло</a></li>
+          </ul>
+        </div>
+        
+        <!-- Help -->
+        <div>
+          <h4 class="font-semibold mb-4 text-lg">Допомога</h4>
+          <ul class="space-y-3 text-white text-opacity-80">
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Як знайти роботу</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Поради для роботодавців</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Трудові права</a></li>
+            <li><a href="#" class="hover:text-yellow-300 transition-colors block py-1">Контакти</a></li>
+          </ul>
